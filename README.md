@@ -7,6 +7,8 @@
 * [5 Easy Steps to Understanding JSON Web Tokens (JWT)](https://medium.com/vandium-software/5-easy-steps-to-understanding-json-web-tokens-jwt-1164c0adfcec#.fgitv8lzd)
 * An excellent tutorial which I found too late [Using JWT with Spring Security OAuth](http://www.baeldung.com/spring-security-oauth-jwt)
 
+Default credentials: user/password
+
 ### Reqest token with user and password
 ```
 http POST "http://localhost:8081/oauth/token?grant_type=password&client_id=test_tool&client_secret=06c8cab86d1fe668c4530a9fff15f7a6e35f1858&username=user&password=password"
