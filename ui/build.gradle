@@ -1,0 +1,43 @@
+plugins {
+	// gradle dependencyUpdates -Drevision=release
+	id 'com.github.ben-manes.versions' version '0.14.0'
+	id "com.moowork.node" version "1.1.1"
+}
+
+apply plugin: 'base'
+
+// https://github.com/srs/gradle-node-plugin
+// gradle clean yarnBuild
+
+task yarnLint(type: YarnTask) {
+	dependsOn yarn_install
+	args = ['run', 'lint']
+}
+
+task yarnTest(type: YarnTask) {
+	dependsOn yarnLint
+	args = ['run', 'test']
+}
+
+task test() {
+	dependsOn yarnTest
+}
+
+task deleteDist(type: Delete) {
+	delete 'dist'
+}
+
+clean.dependsOn(deleteDist)
+
+task yarnBuild(type: YarnTask) {
+	dependsOn deleteDist, yarn_install
+	args = ['run', 'build']
+}
+
+build.dependsOn(yarnBuild)
+
+node {
+	version = '7.6.0'
+	npmVersion = '4.4.0'
+	download = false
+}

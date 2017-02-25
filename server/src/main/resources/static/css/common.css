@@ -1,0 +1,149 @@
+body {
+	font-family: sans-serif;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.container-center {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+.container-error {
+	width: 500px;
+}
+
+.container-log-in {
+	width: 320px;
+}
+
+.container-auth {
+	width: 220px;
+}
+
+.container-error-404 {
+	width: 220px;
+
+	font-size: 8em;
+	font-weight: bold;
+	text-align: center;
+}
+
+.row {
+	display: inline-flex;
+	flex-direction: row;
+	align-items: baseline;
+	margin-top: 10px;
+}
+
+.header {
+	font-size: 1.4em;
+	border-bottom: 1px solid rgb(229, 229, 229);
+	padding-bottom: 5px;
+}
+
+.label-text {
+	font-size: 0.9em;
+	font-weight: lighter;
+	text-align: right;
+	color: rgb(128, 128, 128);
+	padding-right: 10px;
+}
+
+.column-label {
+	text-align: right;
+	width: 30%;
+}
+
+.column-input {
+	width: 70%;
+}
+
+.column-label-wide {
+	text-align: right;
+	width: 90%;
+}
+
+.column-input-check-box {
+	width: 10%;
+}
+
+.column-error-label {
+	text-align: right;
+	width: 20%;
+}
+
+.column-error-info {
+	width: 70%;
+}
+
+.button-row {
+	justify-content: flex-end;
+}
+
+.color-error {
+	color: #E74C3C;
+}
+
+.color-header {
+	color: #3498DB;
+}
+
+form {
+	display: inline-flex;
+	flex-direction: column;
+}
+
+input[type=text], input[type=password] {
+	box-sizing: border-box;
+	width: 100%;
+	background-color: #f6f6f6;
+	border: 1px solid #dcdcdc;
+	font-size: 1em;
+}
+input[type=text]:focus, input[type=password]:focus {
+	background-color: white;
+	outline: none;
+}
+
+.button-margin {
+	margin-right: 10px;
+}
+
+.button-default {
+	color: white;
+	background-color: #3498DB;
+	border-color: #2e6da4;
+}
+.button-default:hover {
+	color: white;
+	background-color: #2e6da4;
+}
+
+button {
+	width: auto;
+	height: 28px;
+	border-radius: 2px;
+	border: 1px solid #dcdcdc;
+	background-color: white;
+	font-size: 0.9em;
+	text-transform: uppercase;
+}
+button:focus {
+	outline: none;
+}
+button:hover {
+	background-color: #f6f6f6;
+}
+button:active {
+	position: relative;
+	top: 1px;
+}

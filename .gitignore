@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# IDEA
+.idea/
+out/
+classes/
+*.iml
+
+# Gradle
+.gradle/
+build/
+
+# npm
+node_modules/
+dist/
+
+# yarn
+yarn.lock

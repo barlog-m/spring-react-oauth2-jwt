@@ -1,0 +1,8 @@
+spring:
+  main.banner_mode: off
+  output.ansi.enabled: always
+
+logging:
+  level:
+    root: INFO
+    org.springframework.security: DEBUG

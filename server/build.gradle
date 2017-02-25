@@ -1,0 +1,112 @@
+buildscript {
+	ext.kotlinVersion = '1.0.6'
+	ext.springBootVersion = '1.5.1.RELEASE'
+	ext.propdepsPluginVersion = '0.0.7'
+
+	ext.thymeleafVersion = '3.0.3.RELEASE'
+
+	ext.icu4jVersion = '58.2'
+
+	ext.apacheHttpClientVersion = '4.5.3'
+	ext.jsonPathVersion = '2.2.0'
+
+	repositories {
+		jcenter()
+		maven { url 'http://repo.spring.io/plugins-release' }
+	}
+
+	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+		classpath "org.springframework.build.gradle:propdeps-plugin:$propdepsPluginVersion"
+	}
+}
+
+plugins {
+	// gradle dependencyUpdates -Drevision=release
+	id 'com.github.ben-manes.versions' version '0.14.0'
+	id 'com.palantir.docker' version '0.12.0'
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'application'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'propdeps'
+apply plugin: 'propdeps-maven'
+apply plugin: 'propdeps-idea'
+
+mainClassName = 'li.barlog.app.App'
+
+repositories {
+	jcenter()
+}
+
+configurations {
+	all*.exclude module : 'spring-boot-starter-logging'
+}
+
+dependencies {
+	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+	compile 'com.fasterxml.jackson.module:jackson-module-kotlin'
+	compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+
+	compile 'org.springframework.boot:spring-boot-starter-log4j2'
+
+	compile('org.springframework.boot:spring-boot-starter-web') {
+		exclude module: 'spring-boot-starter-tomcat'
+	}
+	compile 'org.springframework.boot:spring-boot-starter-undertow'
+
+	compile "org.thymeleaf:thymeleaf:$thymeleafVersion"
+	compile "org.thymeleaf:thymeleaf-spring4:$thymeleafVersion"
+
+	compile 'org.springframework.boot:spring-boot-starter-actuator'
+
+	compile 'org.springframework.boot:spring-boot-starter-security'
+
+	compile 'org.springframework.security.oauth:spring-security-oauth2'
+	compile 'org.springframework.security:spring-security-jwt'
+
+	compile "com.ibm.icu:icu4j:$icu4jVersion"
+
+	testCompile 'org.springframework.security:spring-security-test'
+	testCompile "com.jayway.jsonpath:json-path:$jsonPathVersion"
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
+	testCompile "org.apache.httpcomponents:httpclient:$apacheHttpClientVersion"
+
+	optional 'org.springframework.boot:spring-boot-configuration-processor'
+}
+
+task copyUI(type: Copy, dependsOn: ':ui:build') {
+	from "${project(':ui').projectDir}/dist"
+	into 'build/resources/main/static/ui'
+}
+
+jar {
+	dependsOn copyUI
+
+	archiveName 'app.jar'
+}
+
+bootRepackage {
+	it.mustRunAfter clean
+}
+
+// https://github.com/palantir/gradle-docker
+// gradle docker
+
+docker() {
+	dependsOn jar, bootRepackage
+	name 'oauth2-app'
+	tags 'latest'
+	files tasks.jar.outputs
+	dockerfile 'src/main/docker/Dockerfile'
+	buildArgs([
+		PORT     : '8081',
+		JAVA_OPTS: '-Xms64m -Xmx128m'
+	])
+	pull true
+}

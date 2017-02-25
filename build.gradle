@@ -1,0 +1,8 @@
+allprojects {
+	group 'li.barlog.oauth_jwt'
+	version '0.1-SNAPSHOT'
+}
+
+wrapper {
+	gradleVersion '3.4'
+}

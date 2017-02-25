@@ -1,0 +1,23 @@
+app:
+  name: foo
+  description: bar
+  version: "0.0.1"
+
+api.prefix: /api
+
+authentication:
+  key: "foo"
+  users:
+    -
+      user: "foo"
+      name: "Фун"
+      password: "123"
+    -
+      user: "bar"
+      name: "Бун"
+      password: "321"
+
+logging:
+  level:
+    root: INFO
+    org.springframework.security.oauth2: DEBUG

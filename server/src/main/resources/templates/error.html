@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>App</title>
+	<link rel="stylesheet" href="/css/common.css">
+</head>
+<body>
+<div class="container container-center container-error">
+	<div class="header color-error">
+		Error
+	</div>
+	<div class="row">
+		<div class="label-text column-error-label">Status</div>
+		<div class="column-error-info" data-th-text="${status}">Unknown</div>
+	</div>
+	<div class="row">
+		<div class="label-text column-error-label">Message</div>
+		<div class="column-error-info" data-th-text="${message}">Unknown error</div>
+	</div>
+</div>
+</body>
+</html>

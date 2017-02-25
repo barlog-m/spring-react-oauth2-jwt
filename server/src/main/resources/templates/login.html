@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>App</title>
+	<link rel="stylesheet" href="/css/common.css">
+</head>
+<body>
+<div class="container container-center container-log-in">
+	<div class="header color-header">Log In</div>
+	<form data-th-action="@{/login}"
+		  method="post">
+		<div class="row">
+			<div class="label-text column-label">
+				<label for="username">Name</label>
+			</div>
+			<div class="column-input">
+				<input type="text" id="username" name="username" autofocus>
+			</div>
+		</div>
+		<div class="row">
+			<div class="label-text column-label">
+				<label for="password">Password</label>
+			</div>
+			<div class="column-input">
+				<input type="password" id="password" name="password"/>
+			</div>
+		</div>
+		<div class="row" data-th-if="${param.error}">
+			<div class="column-label label-text"></div>
+			<div class="column-input color-error">
+				Wrong username or password
+			</div>
+		</div>
+		<div class="row button-row">
+			<button class="button-default" type="submit">Enter</button>
+		</div>
+	</form>
+</div>
+</body>
+</html>

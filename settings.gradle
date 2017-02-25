@@ -1,0 +1,4 @@
+rootProject.name = 'spring-react-oauth2-jwt'
+include 'server'
+include 'ui'
+

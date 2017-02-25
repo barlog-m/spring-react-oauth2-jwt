@@ -1,0 +1,8 @@
+body {
+	font-family: 'Play', sans-serif;
+	padding-top: 70px;
+}
+
+body, html {
+    height: 100%;
+}
