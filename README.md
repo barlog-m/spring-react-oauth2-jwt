@@ -1,4 +1,4 @@
-## Web SPA Secured with OAuth2 and JWT
+## SPA Secured with OAuth2 and JWT
 
 [Spring Boot](http://projects.spring.io/spring-boot/) + [React](https://facebook.github.io/react/)
 
