@@ -13,6 +13,8 @@ class AuthenticationSettings {
     )
 
 	lateinit var key: String
+	lateinit var accessTokenValiditySeconds: Integer
+	lateinit var refreshTokenValiditySeconds: Integer
 
     var users = mutableListOf<UserInfo>()
 }

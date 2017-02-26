@@ -1,7 +1,6 @@
 package li.barlog.app.oauth
 
 import li.barlog.app.TestController
-import li.barlog.app.security.OAuth2LogoutSuccessHandler
 import com.fasterxml.jackson.databind.ObjectMapper
 import li.barlog.app.security.CustomJwtTokenEnhancer
 import li.barlog.app.settings.AuthenticationSettings
@@ -30,7 +29,6 @@ import org.springframework.web.util.UriComponentsBuilder
 	classes = arrayOf(
 		AuthTestConfig::class,
 		TestController::class,
-		OAuth2LogoutSuccessHandler::class,
 		CustomJwtTokenEnhancer::class,
 		AuthenticationSettings::class
 	),
@@ -114,24 +112,6 @@ class AuthIT {
 		assertEquals(HttpStatus.OK, response.statusCode)
 	}
 
-	@Test
-	fun logOutRight() {
-		val access_token = requestToken().first
-
-		val request = createRequestWithToken(access_token)
-
-		val response = restTemplate.exchange(createLogOutURL(),
-			HttpMethod.POST, request, String::class.java)
-		assertEquals(HttpStatus.OK, response.statusCode)
-	}
-
-	@Test
-	fun logOutWrong() {
-		val response = restTemplate.exchange(createLogOutURL(),
-			HttpMethod.POST, null, String::class.java)
-		assertEquals(HttpStatus.BAD_REQUEST, response.statusCode)
-	}
-
 	private fun createRequestWithToken(token: String): HttpEntity<Void> {
 		val headers = HttpHeaders()
 		headers.contentType = MediaType.APPLICATION_JSON_UTF8
@@ -181,12 +161,5 @@ class AuthIT {
 		.host("localhost")
 		.port(port)
 		.queryParam("token", token)
-		.build().toUri()
-
-	private fun createLogOutURL() = UriComponentsBuilder
-		.fromPath("/oauth/log_out")
-		.scheme("http")
-		.host("localhost")
-		.port(port)
 		.build().toUri()
 }

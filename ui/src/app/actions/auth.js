@@ -6,7 +6,6 @@ import get from "lodash.get";
 
 import * as types from "./types";
 import * as global from "./global";
-import * as server from "./server";
 
 const client_id = "ui";
 const client_secret = "d3023223c60ae47a0b8fab5e924e19a13a8d82ac";
@@ -68,9 +67,9 @@ export const doLogIn = (username, password, route) => dispatch => {
 export const doLogOut = () => dispatch => {
 	console.debug("do log-out");
 
-	const url = createTokenLogOutUrl();
-	const config = {method: "post"};
-	dispatch(server.request(url, config, logOut, clear(), push("log-in")));
+	dispatch(logOut());
+	dispatch(clear());
+	dispatch(push("log-in"));
 };
 
 export const doLogOutWhenUnauthorized = () => dispatch => {
@@ -98,14 +97,6 @@ export const createTokenRefreshUrl = (refresh_token) =>
 			client_secret,
 			refresh_token
 		}).toString();
-
-const createTokenCheckUrl = (token) =>
-	URI("/oauth/check_token")
-		.query({
-			token
-		}).toString();
-
-const createTokenLogOutUrl = () => URI("/oauth/log_out").toString();
 
 export const checkNeedRefresh = (body) => {
 	if (body === "") {

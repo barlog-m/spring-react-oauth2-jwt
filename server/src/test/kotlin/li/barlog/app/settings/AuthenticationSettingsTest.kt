@@ -23,8 +23,6 @@ class AuthenticationSettingsTest {
 
 	@Test
 	fun test() {
-		authenticationSettings.users.forEach(::println)
-
 		val foo = authenticationSettings.users.find { it.user == "foo" }!!
 		assertNotNull("user 'foo' does not exists", foo)
 		assertEquals("name for user 'foo' not 'Фун'",

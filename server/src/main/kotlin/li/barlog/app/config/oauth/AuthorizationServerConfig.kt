@@ -12,10 +12,10 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices
-import org.springframework.security.oauth2.provider.token.TokenEnhancerChain
 import org.springframework.security.oauth2.provider.approval.ApprovalStore
 import org.springframework.security.oauth2.provider.approval.TokenApprovalStore
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain
 import org.springframework.security.oauth2.provider.token.TokenStore
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore
@@ -57,15 +57,6 @@ open class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
 	@Bean
 	open fun customJwtTokenEnhancer() = CustomJwtTokenEnhancer()
 
-	@Bean
-	open fun approvalStore(
-		@Autowired tokenStore: TokenStore
-	): ApprovalStore {
-		val store = TokenApprovalStore()
-		store.setTokenStore(tokenStore)
-		return store
-	}
-
 	override fun configure(security: AuthorizationServerSecurityConfigurer) {
 		security.allowFormAuthenticationForClients()
 		security.checkTokenAccess("permitAll()")
@@ -80,13 +71,22 @@ open class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
 				.secret("d3023223c60ae47a0b8fab5e924e19a13a8d82ac")
 				.authorizedGrantTypes("authorization_code",
 					"refresh_token", "password")
-				//.accessTokenValiditySeconds(5) // token expired time
+				.autoApprove(true)
+				.accessTokenValiditySeconds(
+					authenticationSettings.accessTokenValiditySeconds.toInt())
+				.refreshTokenValiditySeconds(
+					authenticationSettings.refreshTokenValiditySeconds.toInt())
 			.and()
 				.withClient("test_tool")
 				.scopes("api")
 				.secret("06c8cab86d1fe668c4530a9fff15f7a6e35f1858")
 				.authorizedGrantTypes("authorization_code",
 					"refresh_token", "password")
+				.autoApprove(true)
+				.accessTokenValiditySeconds(
+					authenticationSettings.accessTokenValiditySeconds.toInt())
+				.refreshTokenValiditySeconds(
+					authenticationSettings.refreshTokenValiditySeconds.toInt())
 		// @formatter:on
 	}
 

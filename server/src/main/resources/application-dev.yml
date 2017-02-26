@@ -1,6 +1,9 @@
 spring:
-  main.banner_mode: off
+  main.banner-mode: "off"
   output.ansi.enabled: always
+
+authentication:
+  access_token_validity_seconds: 5
 
 logging:
   level:

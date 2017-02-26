@@ -8,8 +8,6 @@ import li.barlog.app.csrf.CsrfTestConfig
 import li.barlog.app.oauth.AuthTestConfig
 import li.barlog.app.oauth.AuthTestResourceServerConfig
 import li.barlog.app.security.CustomJwtTokenEnhancer
-import li.barlog.app.security.OAuth2AccessConfirmationController
-import li.barlog.app.security.OAuth2LogoutSuccessHandler
 import org.springframework.boot.actuate.autoconfigure.ManagementWebSecurityAutoConfiguration
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration
@@ -37,8 +35,6 @@ import org.springframework.context.annotation.FilterType
 				AuthenticationConfig::class,
 				AuthorizationServerConfig::class,
 				ResourceServerConfig::class,
-				OAuth2LogoutSuccessHandler::class,
-				OAuth2AccessConfirmationController::class,
 				CustomJwtTokenEnhancer::class,
 				CsrfTestConfig::class,
 				AuthTestConfig::class,

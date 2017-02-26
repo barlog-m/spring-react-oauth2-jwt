@@ -6,8 +6,6 @@ import li.barlog.app.config.AuthenticationConfig
 import li.barlog.app.config.SecurityConfig
 import li.barlog.app.config.oauth.AuthorizationServerConfig
 import li.barlog.app.config.oauth.ResourceServerConfig
-import li.barlog.app.security.OAuth2AccessConfirmationController
-import li.barlog.app.security.OAuth2LogoutSuccessHandler
 import org.springframework.boot.actuate.autoconfigure.ManagementWebSecurityAutoConfiguration
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration
@@ -35,9 +33,7 @@ import org.springframework.context.annotation.FilterType
                 SecurityConfig::class,
                 AuthenticationConfig::class,
                 AuthorizationServerConfig::class,
-                ResourceServerConfig::class,
-				OAuth2LogoutSuccessHandler::class,
-				OAuth2AccessConfirmationController::class
+                ResourceServerConfig::class
             )
         )
     )

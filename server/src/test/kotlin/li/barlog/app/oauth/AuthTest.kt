@@ -1,7 +1,6 @@
 package li.barlog.app.oauth
 
 import li.barlog.app.TestController
-import li.barlog.app.security.OAuth2LogoutSuccessHandler
 import com.fasterxml.jackson.databind.ObjectMapper
 import li.barlog.app.security.CustomJwtTokenEnhancer
 import li.barlog.app.settings.AuthenticationSettings
@@ -33,7 +32,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPat
 	classes = arrayOf(
 		AuthTestConfig::class,
 		TestController::class,
-		OAuth2LogoutSuccessHandler::class,
 		CustomJwtTokenEnhancer::class,
 		AuthenticationSettings::class
 	),
@@ -144,33 +142,6 @@ open class AuthTest {
 			.andReturn().response.contentAsString
 	}
 
-	@Test
-	fun logOutRight() {
-		val access_token = requestToken().first
-
-		mvc
-			.perform(
-				post(createLogOutURL())
-					.accept(MediaType.APPLICATION_JSON_UTF8)
-					.contentType(MediaType.APPLICATION_JSON_UTF8)
-					.header("Authorization", "Bearer $access_token")
-					.with(csrf().asHeader()))
-			.andExpect(status().isOk)
-			.andReturn().response.contentAsString
-	}
-
-	@Test
-	fun logOutWrong() {
-		mvc
-			.perform(
-				post(createLogOutURL())
-					.accept(MediaType.APPLICATION_JSON_UTF8)
-					.contentType(MediaType.APPLICATION_JSON_UTF8)
-					.with(csrf().asHeader()))
-			.andExpect(status().isBadRequest)
-			.andReturn().response.contentAsString
-	}
-
 	private fun requestToken(): Pair<String, String> {
 		val tokenBody = mvc
 			.perform(
@@ -205,9 +176,5 @@ open class AuthTest {
 	private fun createTokenCheckURL(token: String) = UriComponentsBuilder
 		.fromPath("/oauth/check_token")
 		.queryParam("token", token)
-		.build().toUriString()
-
-	private fun createLogOutURL() = UriComponentsBuilder
-		.fromPath("/oauth/log_out")
 		.build().toUriString()
 }

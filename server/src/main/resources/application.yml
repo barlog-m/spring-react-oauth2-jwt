@@ -9,6 +9,8 @@ api:
 
 authentication:
   key: "d3b6681900dd39068483c3a0decad73fbe42acb363fb55babb87a74b22d6aac5"
+  access_token_validity_seconds: 300
+  refresh_token_validity_seconds: 2592000
   users:
     -
       user: "user"

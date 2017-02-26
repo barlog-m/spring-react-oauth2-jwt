@@ -1,6 +1,5 @@
 package li.barlog.app.oauth
 
-import li.barlog.app.security.OAuth2LogoutSuccessHandler
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -16,9 +15,6 @@ open class AuthTestResourceServerConfig : ResourceServerConfigurerAdapter() {
 	@Autowired
 	private lateinit var tokenStore: TokenStore
 
-	@Autowired
-	private lateinit var oAuth2LogoutSuccessHandler: OAuth2LogoutSuccessHandler
-
 	override fun configure(http: HttpSecurity) {
 		// @formatter:off
 		http
@@ -26,10 +22,6 @@ open class AuthTestResourceServerConfig : ResourceServerConfigurerAdapter() {
 			.and()
 				.authorizeRequests()
 					.anyRequest().authenticated()
-			.and()
-				.logout()
-					.logoutUrl("/oauth/log_out")
-					.logoutSuccessHandler(oAuth2LogoutSuccessHandler)
 			.and()
 				.sessionManagement()
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
