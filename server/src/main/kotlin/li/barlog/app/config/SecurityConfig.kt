@@ -22,13 +22,12 @@ open class SecurityConfig : WebSecurityConfigurerAdapter() {
 		// @formatter:off
 		http
 			.requestMatchers()
-				.antMatchers("/oauth/authorize", "/oauth/confirm_access")
+				.antMatchers("/oauth/authorize")
 				.regexMatchers("/(?!api)", "/(?!oauth)")
 				.antMatchers("/*")
 			.and()
 				.authorizeRequests()
-					.antMatchers("/oauth/authorize").fullyAuthenticated()
-					.antMatchers("/oauth/confirm_access").fullyAuthenticated()
+					.antMatchers("/oauth/authorize").hasRole("USER")
 					.anyRequest().denyAll()
 			.and()
 				.formLogin()

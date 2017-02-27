@@ -127,21 +127,6 @@ open class AuthTest {
 		Assert.assertEquals("ok", map["status"])
 	}
 
-	@Test
-	fun tokenCheck() {
-		val access_token = requestToken().first
-
-		mvc
-			.perform(
-				post(createTokenCheckURL(access_token))
-					.accept(MediaType.APPLICATION_JSON_UTF8)
-					.contentType(MediaType.APPLICATION_JSON_UTF8)
-					.header("Authorization", "Bearer $access_token")
-					.with(csrf().asHeader()))
-			.andExpect(status().isOk)
-			.andReturn().response.contentAsString
-	}
-
 	private fun requestToken(): Pair<String, String> {
 		val tokenBody = mvc
 			.perform(
@@ -171,10 +156,5 @@ open class AuthTest {
 		.queryParam("client_id", CLIENT_ID)
 		.queryParam("client_secret", CLIENT_SECRET)
 		.queryParam("refresh_token", refresh_token)
-		.build().toUriString()
-
-	private fun createTokenCheckURL(token: String) = UriComponentsBuilder
-		.fromPath("/oauth/check_token")
-		.queryParam("token", token)
 		.build().toUriString()
 }

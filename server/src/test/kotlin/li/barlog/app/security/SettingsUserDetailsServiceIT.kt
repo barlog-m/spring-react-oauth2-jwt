@@ -36,7 +36,7 @@ class SettingsUserDetailsServiceIT {
 
 		assertEquals("user name not 'foo'", "foo", userDetails.username)
 		assertEquals("user password not '123'", "123", userDetails.password)
-		assertEquals("user authorities not 'USER'",
-			setOf(SimpleGrantedAuthority("USER")), userDetails.authorities)
+		assertEquals("user authorities not 'ROLE_USER'",
+			setOf(SimpleGrantedAuthority("ROLE_USER")), userDetails.authorities)
 	}
 }

@@ -16,7 +16,7 @@ class UserDetailsEx(
 	override fun getPassword() = userInfo.password
 
 	override fun getAuthorities(): Collection<GrantedAuthority> {
-		return setOf(SimpleGrantedAuthority("USER"))
+		return setOf(SimpleGrantedAuthority("ROLE_USER"))
 	}
 
 	override fun isCredentialsNonExpired() = true
@@ -25,5 +25,5 @@ class UserDetailsEx(
 
 	override fun isAccountNonLocked() = true
 
-	override fun isEnabled() = true
+	override fun isEnabled() = userInfo.enabled
 }

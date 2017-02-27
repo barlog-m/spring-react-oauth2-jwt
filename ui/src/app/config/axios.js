@@ -52,15 +52,23 @@ const responseInterceptor = dispatch => {
 						},
 						error => {
 							console.debug("token refresh error", error);
-							dispatch(auth.doLogOutWhenUnauthorized());
+							dispatch(auth.doLogOut());
+							dispatch(auth.badCredentials());
 							return Promise.reject(null);
 						}
 					);
 			} else {
 				console.debug("401 error but not token refresh", error);
-				dispatch(auth.doLogOutWhenUnauthorized());
+				dispatch(auth.doLogOut());
+				dispatch(auth.badCredentials());
 				return Promise.reject(null);
 			}
+		}
+
+		if (status === 403) {
+			dispatch(auth.doLogOut());
+			dispatch(auth.badCredentials());
+			return Promise.reject(null);
 		}
 
 		console.debug("error without refresh", error);

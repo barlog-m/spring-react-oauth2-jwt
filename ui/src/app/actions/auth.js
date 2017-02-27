@@ -72,13 +72,6 @@ export const doLogOut = () => dispatch => {
 	dispatch(push("log-in"));
 };
 
-export const doLogOutWhenUnauthorized = () => dispatch => {
-	console.debug("do log-out when unauthorized");
-
-	dispatch(clear());
-	dispatch(push("log-in"));
-};
-
 const createTokenRequestUrl = (username, password) =>
 	URI("/oauth/token")
 		.query({

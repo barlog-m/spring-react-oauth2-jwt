@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/oauth/confirm_access",
+@RequestMapping("/oauth/authorize",
 	consumes = arrayOf(MediaType.APPLICATION_JSON_UTF8_VALUE),
 	produces = arrayOf(MediaType.APPLICATION_JSON_UTF8_VALUE)
 )
