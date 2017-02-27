@@ -1,14 +1,15 @@
 buildscript {
-	ext.kotlinVersion = '1.0.6'
-	ext.springBootVersion = '1.5.1.RELEASE'
-	ext.propdepsPluginVersion = '0.0.7'
+	ext.kotlinVer = '1.0.6'
+	ext.springBootVer = '1.5.1.RELEASE'
+	ext.propdepsPluginVer = '0.0.7'
 
-	ext.thymeleafVersion = '3.0.3.RELEASE'
+	ext.thymeleafVer = '3.0.3.RELEASE'
+	ext.kotlinLoggingVer = '1.4.2'
 
-	ext.icu4jVersion = '58.2'
+	ext.icu4jVer = '58.2'
 
-	ext.apacheHttpClientVersion = '4.5.3'
-	ext.jsonPathVersion = '2.2.0'
+	ext.apacheHttpClientVer = '4.5.3'
+	ext.jsonPathVer = '2.2.0'
 
 	repositories {
 		jcenter()
@@ -16,9 +17,9 @@ buildscript {
 	}
 
 	dependencies {
-		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-		classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
-		classpath "org.springframework.build.gradle:propdeps-plugin:$propdepsPluginVersion"
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVer"
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVer"
+		classpath "org.springframework.build.gradle:propdeps-plugin:$propdepsPluginVer"
 	}
 }
 
@@ -48,7 +49,9 @@ configurations {
 }
 
 dependencies {
-	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVer"
+
+	compile "io.github.microutils:kotlin-logging:$kotlinLoggingVer"
 
 	compile 'com.fasterxml.jackson.module:jackson-module-kotlin'
 	compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
@@ -60,8 +63,8 @@ dependencies {
 	}
 	compile 'org.springframework.boot:spring-boot-starter-undertow'
 
-	compile "org.thymeleaf:thymeleaf:$thymeleafVersion"
-	compile "org.thymeleaf:thymeleaf-spring4:$thymeleafVersion"
+	compile "org.thymeleaf:thymeleaf:$thymeleafVer"
+	compile "org.thymeleaf:thymeleaf-spring4:$thymeleafVer"
 
 	compile 'org.springframework.boot:spring-boot-starter-actuator'
 
@@ -70,12 +73,12 @@ dependencies {
 	compile 'org.springframework.security.oauth:spring-security-oauth2'
 	compile 'org.springframework.security:spring-security-jwt'
 
-	compile "com.ibm.icu:icu4j:$icu4jVersion"
+	compile "com.ibm.icu:icu4j:$icu4jVer"
 
 	testCompile 'org.springframework.security:spring-security-test'
-	testCompile "com.jayway.jsonpath:json-path:$jsonPathVersion"
+	testCompile "com.jayway.jsonpath:json-path:$jsonPathVer"
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
-	testCompile "org.apache.httpcomponents:httpclient:$apacheHttpClientVersion"
+	testCompile "org.apache.httpcomponents:httpclient:$apacheHttpClientVer"
 
 	optional 'org.springframework.boot:spring-boot-configuration-processor'
 }

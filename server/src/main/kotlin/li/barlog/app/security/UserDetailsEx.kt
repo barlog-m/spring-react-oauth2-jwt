@@ -8,8 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails
 class UserDetailsEx(
 	private val userInfo: AuthenticationSettings.UserInfo
 ) : UserDetails {
-	val name: String
-		get() = userInfo.name
+	val name: String by lazy {
+		userInfo.name
+	}
 
 	override fun getUsername() = userInfo.user
 

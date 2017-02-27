@@ -28,12 +28,12 @@ open class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
 
 	@Bean
 	open fun tokenStore(
-		@Autowired authenticationSettings: AuthenticationSettings
+		authenticationSettings: AuthenticationSettings
 	) = JwtTokenStore(accessTokenConverter(authenticationSettings))
 
 	@Bean
 	open fun accessTokenConverter(
-		@Autowired authenticationSettings: AuthenticationSettings
+		authenticationSettings: AuthenticationSettings
 	): JwtAccessTokenConverter {
 		val jwtAccessTokenConverter = JwtAccessTokenConverter()
 		jwtAccessTokenConverter.setSigningKey(authenticationSettings.key)
@@ -43,7 +43,7 @@ open class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
 	@Bean
 	@Primary
 	open fun tokenServices(
-		@Autowired authenticationSettings: AuthenticationSettings
+		authenticationSettings: AuthenticationSettings
 	): DefaultTokenServices {
 		val defaultTokenServices = DefaultTokenServices()
 		defaultTokenServices.setTokenStore(tokenStore(authenticationSettings))
