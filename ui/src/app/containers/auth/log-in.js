@@ -4,7 +4,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import get from "lodash.get";
 
-import BadCredentialsError from "./bad-credentials";
+import AccessDenied from "./access-denied";
 import * as auth from "../../actions/auth";
 
 class LogIn extends Component {
@@ -57,7 +57,7 @@ class LogIn extends Component {
 	render() {
 		return (
 			<div className="container">
-				<BadCredentialsError/>
+				<AccessDenied/>
 				<div className="center-block vertical-center log-in">
 					<div className="panel panel-primary">
 						<div className="panel-heading">
