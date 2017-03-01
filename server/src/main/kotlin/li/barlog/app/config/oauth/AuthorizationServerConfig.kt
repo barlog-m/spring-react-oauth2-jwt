@@ -73,9 +73,9 @@ open class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
 					"refresh_token", "password")
 				.autoApprove(true)
 				.accessTokenValiditySeconds(
-					authenticationSettings.accessTokenValiditySeconds.toInt())
+					authenticationSettings.accessTokenValiditySeconds)
 				.refreshTokenValiditySeconds(
-					authenticationSettings.refreshTokenValiditySeconds.toInt())
+					authenticationSettings.refreshTokenValiditySeconds)
 			.and()
 				.withClient("test_tool")
 				.scopes("api")
@@ -84,9 +84,9 @@ open class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
 					"refresh_token", "password")
 				.autoApprove(true)
 				.accessTokenValiditySeconds(
-					authenticationSettings.accessTokenValiditySeconds.toInt())
+					authenticationSettings.accessTokenValiditySeconds)
 				.refreshTokenValiditySeconds(
-					authenticationSettings.refreshTokenValiditySeconds.toInt())
+					authenticationSettings.refreshTokenValiditySeconds)
 		// @formatter:on
 	}
 
