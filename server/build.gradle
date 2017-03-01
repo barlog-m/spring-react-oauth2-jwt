@@ -40,6 +40,10 @@ apply plugin: 'propdeps-idea'
 
 mainClassName = 'li.barlog.app.App'
 
+compileKotlin {
+	kotlinOptions.jvmTarget = "1.8"
+}
+
 repositories {
 	jcenter()
 }
