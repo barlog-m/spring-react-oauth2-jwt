@@ -4,6 +4,7 @@ buildscript {
 	ext.propdepsPluginVer = '0.0.7'
 
 	ext.thymeleafVer = '3.0.3.RELEASE'
+	ext.kotlinLoggingVer = '1.4.2'
 
 	ext.icu4jVer = '58.2'
 
@@ -50,6 +51,8 @@ configurations {
 dependencies {
 	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVer"
 	compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVer"
+
+	compile "io.github.microutils:kotlin-logging:$kotlinLoggingVer"
 
 	compile 'com.fasterxml.jackson.module:jackson-module-kotlin'
 	compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'

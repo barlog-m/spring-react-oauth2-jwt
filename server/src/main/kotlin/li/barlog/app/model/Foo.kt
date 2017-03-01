@@ -14,6 +14,7 @@ data class Foo (
 		private val rule = RuleBasedNumberFormat(locale, SPELLOUT)
 	}
 
-	val message: String
-		get() = rule.format(value)
+	val message: String by lazy {
+		rule.format(value)
+	}
 }

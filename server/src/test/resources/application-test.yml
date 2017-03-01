@@ -8,15 +8,18 @@ api.prefix: /api
 authentication:
   key: "foo"
   access_token_validity_seconds: 5
+  refresh_token_validity_seconds: 300
   users:
     -
       user: "foo"
       name: "Фун"
       password: "123"
+      enabled: true
     -
       user: "bar"
       name: "Бун"
       password: "321"
+      enabled: true
 
 logging:
   level:

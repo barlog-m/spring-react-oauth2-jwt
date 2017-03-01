@@ -19,9 +19,10 @@ open class ResourceServerConfig : ResourceServerConfigurerAdapter() {
 	override fun configure(http: HttpSecurity) {
 		// @formatter:off
 		http
-			.requestMatchers().antMatchers("/api/**", "/oauth/log_out")
+			.requestMatchers().antMatchers("/api/**")
 			.and()
 				.authorizeRequests()
+					.antMatchers("/api/**").hasRole("USER")
 					.anyRequest().authenticated()
 			.and()
 				.sessionManagement()

@@ -1,8 +1,7 @@
 package li.barlog.app.rest
 
 import li.barlog.app.service.FooService
-import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
+import mu.KLogging
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -15,16 +14,14 @@ import org.springframework.web.bind.annotation.RestController
 	consumes = arrayOf(MediaType.APPLICATION_JSON_UTF8_VALUE),
 	produces = arrayOf(MediaType.APPLICATION_JSON_UTF8_VALUE)
 )
-class FooController @Autowired constructor(
+class FooController constructor(
 	private val fooService: FooService
 ) {
-	companion object {
-		private val log = LoggerFactory.getLogger(FooController::class.java)
-	}
+	companion object : KLogging()
 
 	@GetMapping
 	fun get() = run {
-		log.info("get list")
+		logger.info { "get list" }
 		ResponseEntity.ok(fooService.list())
 	}
 }

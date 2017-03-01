@@ -101,17 +101,6 @@ class AuthIT {
 		assertEquals("ok", map["status"])
 	}
 
-	@Test
-	fun tokenCheck() {
-		val access_token = requestToken().first
-
-		val request = createRequestWithToken(access_token)
-
-		val response = restTemplate.exchange(createTokenCheckURL(access_token),
-			HttpMethod.POST, request, String::class.java)
-		assertEquals(HttpStatus.OK, response.statusCode)
-	}
-
 	private fun createRequestWithToken(token: String): HttpEntity<Void> {
 		val headers = HttpHeaders()
 		headers.contentType = MediaType.APPLICATION_JSON_UTF8
@@ -153,13 +142,5 @@ class AuthIT {
 		.queryParam("client_id", CLIENT_ID)
 		.queryParam("client_secret", CLIENT_SECRET)
 		.queryParam("refresh_token", refresh_token)
-		.build().toUri()
-
-	private fun createTokenCheckURL(token: String) = UriComponentsBuilder
-		.fromPath("/oauth/check_token")
-		.scheme("http")
-		.host("localhost")
-		.port(port)
-		.queryParam("token", token)
 		.build().toUri()
 }

@@ -43,7 +43,7 @@ class CsrfTest {
 	fun csrfOk() {
 		mvc
 			.perform(
-				post("/oauth/confirm_access")
+				post("/oauth/authorize")
 					.accept(MediaType.APPLICATION_JSON_UTF8)
 					.contentType(MediaType.APPLICATION_JSON_UTF8)
 					.with(csrf().asHeader()))
@@ -55,7 +55,7 @@ class CsrfTest {
 	fun csrfError() {
 		mvc
 			.perform(
-				post("/oauth/confirm_access")
+				post("/oauth/authorize")
 					.accept(MediaType.APPLICATION_JSON_UTF8)
 					.contentType(MediaType.APPLICATION_JSON_UTF8)
 					.with(csrf().useInvalidToken()))

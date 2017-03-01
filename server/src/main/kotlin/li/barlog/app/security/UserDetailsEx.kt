@@ -8,15 +8,16 @@ import org.springframework.security.core.userdetails.UserDetails
 class UserDetailsEx(
 	private val userInfo: AuthenticationSettings.UserInfo
 ) : UserDetails {
-	val name: String
-		get() = userInfo.name
+	val name: String by lazy {
+		userInfo.name
+	}
 
 	override fun getUsername() = userInfo.user
 
 	override fun getPassword() = userInfo.password
 
 	override fun getAuthorities(): Collection<GrantedAuthority> {
-		return setOf(SimpleGrantedAuthority("USER"))
+		return setOf(SimpleGrantedAuthority("ROLE_USER"))
 	}
 
 	override fun isCredentialsNonExpired() = true
@@ -25,5 +26,5 @@ class UserDetailsEx(
 
 	override fun isAccountNonLocked() = true
 
-	override fun isEnabled() = true
+	override fun isEnabled() = userInfo.enabled
 }

@@ -20,7 +20,7 @@ const BadCredentialsError = props => (
 					</h4>
 				</div>
 				<div className="modal-body">
-					<center><p>Wrong user name or password</p></center>
+					<center><p>Access Denied</p></center>
 				</div>
 				<div className="modal-footer">
 					<button type="button"

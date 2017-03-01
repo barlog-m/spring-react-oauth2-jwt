@@ -9,7 +9,8 @@ class AuthenticationSettings {
     data class UserInfo(
         var user: String = "",
         var name: String = "",
-        var password: String = ""
+        var password: String = "",
+		var enabled: Boolean = false
     )
 
 	lateinit var key: String

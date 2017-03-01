@@ -4,6 +4,7 @@ spring:
 
 authentication:
   access_token_validity_seconds: 5
+  refresh_token_validity_seconds: 300
 
 logging:
   level:
