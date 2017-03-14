@@ -1,8 +1,6 @@
 import React, {Component, PropTypes} from "react";
 
-import Link from "react-router/lib/Link";
-import IndexLink from "react-router/lib/IndexLink";
-import withRouter from "react-router/lib/withRouter";
+import {Link, IndexLink, withRouter} from "react-router-dom";
 
 class NavItem extends Component {
 	render() {

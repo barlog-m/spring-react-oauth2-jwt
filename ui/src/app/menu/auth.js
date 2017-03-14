@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import Link from "react-router/lib/Link";
+import {Link} from "react-router-dom";
 
 import * as auth from "../actions/auth";
 
