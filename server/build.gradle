@@ -1,6 +1,6 @@
 buildscript {
-	ext.kotlinVer = '1.1.0'
-	ext.springBootVer = '1.5.1.RELEASE'
+	ext.kotlinVer = '1.1.1'
+	ext.springBootVer = '1.5.2.RELEASE'
 	ext.propdepsPluginVer = '0.0.7'
 
 	ext.thymeleafVer = '3.0.3.RELEASE'
