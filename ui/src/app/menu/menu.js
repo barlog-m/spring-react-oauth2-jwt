@@ -1,6 +1,7 @@
 import React from "react";
-import {Link, NavLink} from "react-router-dom";
+import Link from "react-router/lib/Link";
 
+import NavItem from "../bootstrap/item";
 import AuthMenu from "./auth";
 
 const Menu = props => (
@@ -11,8 +12,8 @@ const Menu = props => (
 			</div>
 			<div className="collapse navbar-collapse">
 				<ul className="nav navbar-nav">
-					<NavLink to="foo" activeClassName="active">Foo</NavLink>
-					<NavLink to="bar" activeClassName="active">Bar</NavLink>
+					<NavItem to="foo">Foo</NavItem>
+					<NavItem to="bar">Bar</NavItem>
 				</ul>
 				<AuthMenu/>
 			</div>
