@@ -10,17 +10,20 @@ import {createStore, combineReducers, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import thunkMiddleware from "redux-thunk";
 
-import {Router, browserHistory} from "react-router";
-import {syncHistoryWithStore, routerReducer, routerMiddleware} from "react-router-redux";
+import createHistory from "history/createBrowserHistory";
+
+import { ConnectedRouter, routerReducer, routerMiddleware } from "react-router-redux";
 
 import createLogger from "redux-logger";
 import {AppContainer} from "react-hot-loader";
 
+import App from "./app/app";
 import reducers from "./app/reducers";
-import createRoutes from "./app/routes";
-
+import axiosConfig from "./app/config/axios";
 import authStateMiddleware from "./app/middleware/auth-state";
 import "./mock";
+
+const history = createHistory();
 
 const rootReducer = combineReducers({
 	...reducers,
@@ -30,7 +33,7 @@ const rootReducer = combineReducers({
 const logger = createLogger();
 
 const middleware = applyMiddleware(
-	routerMiddleware(browserHistory),
+	routerMiddleware(history),
 	thunkMiddleware,
 	// logger,
 	authStateMiddleware
@@ -44,14 +47,14 @@ const store = createStore(
 	composeEnhancers(middleware)
 );
 
-const history = syncHistoryWithStore(browserHistory, store);
-
-const routes = createRoutes(store);
+axiosConfig(store.dispatch);
 
 render(
 	<AppContainer>
 		<Provider store={store}>
-			<Router routes={routes} history={history}/>
+			<ConnectedRouter history={history}>
+				<App/>
+			</ConnectedRouter>
 		</Provider>
 	</AppContainer>,
 	document.getElementById("root")

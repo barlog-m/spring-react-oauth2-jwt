@@ -1,37 +1,49 @@
 import React from "react";
+import {connect} from "react-redux";
 
-import Route from "react-router/lib/Route";
-import IndexRedirect from "react-router/lib/IndexRedirect";
-
-import axiosConfig from "./config/axios";
+import {Switch, Route} from "react-router";
 
 import authRequired from "./auth-required";
 import * as foo from "./actions/foo";
 import * as bar from "./actions/bar";
 
-import App from "./app";
 import NotFound from "./containers/404";
 import LogIn from "./containers/auth/log-in";
 import Foo from "./containers/foo";
 import Bar from "./containers/bar";
 
-const createRoutes = store => {
-	const dispatch = store.dispatch;
-	axiosConfig(dispatch);
+const Routes = props => (
+	<Switch>
+		<Route path="/log-in" component={LogIn}/>
+		<Route path="/foo"
+			   component={Foo}
+			   onEnter={props.onFooEnter}/>
+		<Route path="/bar"
+			   component={Bar}
+			   onEnter={props.onBarEnter}/>
+		<Route component={NotFound}/>
+	</Switch>
+);
 
-	return (
-		<Route path="/" component={App}>
-			<IndexRedirect to="foo"/>
-			<Route path="log-in" component={LogIn}/>
-			<Route path="foo"
-				   component={Foo}
-				   onEnter={authRequired(store, () => dispatch(foo.getList()))}/>
-			<Route path="bar"
-				   component={Bar}
-				   onEnter={authRequired(store, () => dispatch(bar.getList()))}/>
-			<Route path="*" component={NotFound}/>
-		</Route>
-	);
+const mapStateToProps = state => ({
+	isAuthenticated: state.user.isAuthenticated
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+	dispatch
+});
+
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+	const {isAuthenticated} = stateProps;
+	const {dispatch} = dispatchProps;
+
+	return {
+		...stateProps,
+		...dispatchProps,
+		...ownProps,
+		onFooEnter: () => dispatch(authRequired(isAuthenticated, () => foo.getList())),
+		onBarEnter: () => dispatch(authRequired(isAuthenticated, () => bar.getList()))
+	};
 };
 
-export default createRoutes;
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Routes);

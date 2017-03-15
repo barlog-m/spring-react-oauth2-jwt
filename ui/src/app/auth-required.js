@@ -1,21 +1,21 @@
 import * as auth from "./actions/auth";
 
 /** Return function with two parameters for call when onEnter router event
- * @param {object} store - Redux Store
+ * @param {boolean} isAuthenticated - user authenticated state
  * @param {function} action - Closure function call after authentication success
  */
-const authRequired = (store, action) => {
+const authRequired = (isAuthenticated, action) => dispatch => {
 	return (nextState, replace) => {
-		store.dispatch(auth.load());
+		dispatch(auth.load());
 
-		if (!store.getState().user.isAuthenticated) {
+		if (!isAuthenticated) {
 			replace({
 				pathname: "/log-in",
 				state: { nextPathname: nextState.location.pathname }
 			});
 		} else {
 			if (action !== void 0) {
-				action(nextState, replace);
+				dispatch(action(nextState, replace));
 			}
 		}
 	};
