@@ -71,15 +71,10 @@ const config = {
 		]
 	},
 	devServer: {
-		contentBase: "./src",
 		port: 8080,
 
 		historyApiFallback: true,
 		hot: true,
-		inline: true,
-		stats: {
-			colors: true
-		},
 
 		proxy: {
 			"/api/": {
