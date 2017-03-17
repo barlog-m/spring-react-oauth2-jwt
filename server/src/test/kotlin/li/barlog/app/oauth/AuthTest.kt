@@ -1,9 +1,9 @@
 package li.barlog.app.oauth
 
 import li.barlog.app.TestController
-import com.fasterxml.jackson.databind.ObjectMapper
 import li.barlog.app.security.CustomJwtTokenEnhancer
 import li.barlog.app.settings.AuthenticationSettings
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.hamcrest.Matchers
 import org.junit.Assert
 import org.junit.Before
@@ -17,7 +17,6 @@ import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
-import org.springframework.web.util.UriComponentsBuilder
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
@@ -37,19 +36,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPat
 	),
 	webEnvironment = WebEnvironment.MOCK)
 @ActiveProfiles("test")
-open class AuthTest {
-	companion object {
-		private val CLIENT_ID = "test_tool"
-		private val CLIENT_SECRET = "06c8cab86d1fe668c4530a9fff15f7a6e35f1858"
-	}
+class AuthTest {
+	@Autowired
+	private lateinit var context: WebApplicationContext
 
 	@Autowired
-	lateinit var context: WebApplicationContext
+	private lateinit var mapper: ObjectMapper
 
-	@Autowired
-	lateinit var mapper: ObjectMapper
-
-	lateinit var mvc: MockMvc
+	private lateinit var mvc: MockMvc
 
 	@Before
 	fun setup() {
@@ -63,7 +57,7 @@ open class AuthTest {
 	fun authentication() {
 		mvc
 			.perform(
-				post(createAuthURL())
+				post(createAuthUrl("foo", "bar"))
 					.with(csrf().asHeader()))
 			.andExpect(status().isOk)
 			.andExpect(jsonPath("access_token", Matchers.not(Matchers.isEmptyString())))
@@ -105,7 +99,7 @@ open class AuthTest {
 
 		val tokenBody = mvc
 			.perform(
-				post(createTokenRefreshURL(refresh_token))
+				post(createTokenRefreshUrl(refresh_token))
 					.with(csrf().asHeader()))
 			.andExpect(status().isOk)
 			.andReturn().response.contentAsString
@@ -130,7 +124,7 @@ open class AuthTest {
 	private fun requestToken(): Pair<String, String> {
 		val tokenBody = mvc
 			.perform(
-				post(createAuthURL())
+				post(createAuthUrl("foo", "bar"))
 					.with(csrf().asHeader()))
 			.andExpect(status().isOk)
 			.andReturn().response.contentAsString
@@ -140,21 +134,4 @@ open class AuthTest {
 		val refresh_token = tokenMap["refresh_token"].toString()
 		return Pair(access_token, refresh_token)
 	}
-
-	private fun createAuthURL() = UriComponentsBuilder
-		.fromPath("/oauth/token")
-		.queryParam("grant_type", "password")
-		.queryParam("client_id", CLIENT_ID)
-		.queryParam("client_secret", CLIENT_SECRET)
-		.queryParam("username", "foo")
-		.queryParam("password", "bar")
-		.build().toUriString()
-
-	private fun createTokenRefreshURL(refresh_token: String) = UriComponentsBuilder
-		.fromPath("/oauth/token")
-		.queryParam("grant_type", "refresh_token")
-		.queryParam("client_id", CLIENT_ID)
-		.queryParam("client_secret", CLIENT_SECRET)
-		.queryParam("refresh_token", refresh_token)
-		.build().toUriString()
 }

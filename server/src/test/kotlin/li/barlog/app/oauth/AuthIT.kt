@@ -1,19 +1,18 @@
 package li.barlog.app.oauth
 
 import li.barlog.app.TestController
-import com.fasterxml.jackson.databind.ObjectMapper
 import li.barlog.app.security.CustomJwtTokenEnhancer
 import li.barlog.app.settings.AuthenticationSettings
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.context.embedded.LocalServerPort
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment
 import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.context.ApplicationContext
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
@@ -21,8 +20,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
-
-import org.springframework.web.util.UriComponentsBuilder
 
 @RunWith(SpringRunner::class)
 @SpringBootTest(
@@ -35,26 +32,18 @@ import org.springframework.web.util.UriComponentsBuilder
 	webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 class AuthIT {
-	companion object {
-		private val CLIENT_ID = "test_tool"
-		private val CLIENT_SECRET = "06c8cab86d1fe668c4530a9fff15f7a6e35f1858"
-	}
+	@Autowired
+	private lateinit var mapper: ObjectMapper
 
 	@Autowired
-	lateinit var mapper: ObjectMapper
+	private lateinit var restTemplate: TestRestTemplate
 
-	@Autowired
-	lateinit var restTemplate: TestRestTemplate
-
-	@Value("\${local.server.port}")
-	val port: Int = 0
-
-	@Autowired
-	lateinit var context: ApplicationContext
+	@LocalServerPort
+	private lateinit var port: Integer
 
 	@Test
 	fun authentication() {
-		val url = createAuthURL()
+		val url = createAuthUrl(port.toInt(), "foo", "bar")
 
 		val response = restTemplate.postForEntity(url, null, String::class.java)
 		assertEquals(HttpStatus.OK, response.statusCode)
@@ -87,7 +76,7 @@ class AuthIT {
 	fun tokenRefresh() {
 		val refresh_token = requestToken().second
 
-		val url = createTokenRefreshURL(refresh_token)
+		val url = createTokenRefreshUrl(port.toInt(), refresh_token)
 
 		val e = restTemplate.postForEntity(url, null, String::class.java)
 		val tokenMap = mapper.readValue(e.body, Map::class.java)
@@ -112,7 +101,7 @@ class AuthIT {
 	}
 
 	private fun requestToken(): Pair<String, String> {
-		val url = createAuthURL()
+		val url = createAuthUrl(port.toInt(), "foo", "bar")
 
 		val e = restTemplate.postForEntity(url, null, String::class.java)
 		val tokenMap = mapper.readValue(e.body, Map::class.java)
@@ -120,27 +109,4 @@ class AuthIT {
 		val refresh_token = tokenMap["refresh_token"].toString()
 		return Pair(access_token, refresh_token)
 	}
-
-	private fun createAuthURL() = UriComponentsBuilder
-		.fromPath("/oauth/token")
-		.scheme("http")
-		.host("localhost")
-		.port(port)
-		.queryParam("grant_type", "password")
-		.queryParam("client_id", CLIENT_ID)
-		.queryParam("client_secret", CLIENT_SECRET)
-		.queryParam("username", "foo")
-		.queryParam("password", "bar")
-		.build().toUri()
-
-	private fun createTokenRefreshURL(refresh_token: String) = UriComponentsBuilder
-		.fromPath("/oauth/token")
-		.scheme("http")
-		.host("localhost")
-		.port(port)
-		.queryParam("grant_type", "refresh_token")
-		.queryParam("client_id", CLIENT_ID)
-		.queryParam("client_secret", CLIENT_SECRET)
-		.queryParam("refresh_token", refresh_token)
-		.build().toUri()
 }
