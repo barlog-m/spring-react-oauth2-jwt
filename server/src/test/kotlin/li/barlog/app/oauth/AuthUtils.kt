@@ -1,5 +1,6 @@
 package li.barlog.app.oauth
 
+import org.springframework.security.crypto.codec.Base64
 import org.springframework.web.util.UriComponentsBuilder
 
 private val CLIENT_ID = "test_tool"
@@ -44,3 +45,25 @@ fun createTokenRefreshUrl(port: Int,
 		.host("localhost")
 		.port(port)
 		.build().toUri()
+
+fun createTokenCheckURL(token: String) =
+	tokenCheckURL(token)
+		.build().toUriString()
+
+fun createTokenCheckURL(port: Int,
+						token: String) =
+	tokenCheckURL(token)
+		.scheme("http")
+		.host("localhost")
+		.port(port)
+		.build().toUri()
+
+private fun tokenCheckURL(token: String) =
+	UriComponentsBuilder
+		.fromPath("/oauth/check_token")
+		.queryParam("token", token)
+
+fun basicAuthHeader() = run {
+	val c = "$CLIENT_ID:$CLIENT_SECRET"
+	"Basic ${String(Base64.encode(c.toByteArray()))}"
+}

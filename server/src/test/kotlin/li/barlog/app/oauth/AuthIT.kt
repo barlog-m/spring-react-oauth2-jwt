@@ -90,6 +90,19 @@ class AuthIT {
 		assertEquals("ok", map["status"])
 	}
 
+	@Test
+	fun tokenCheck() {
+		val access_token = requestToken().first
+
+		val headers = HttpHeaders()
+		headers.add("Authorization", basicAuthHeader())
+		val request = HttpEntity<Void>(headers)
+
+		val response = restTemplate.exchange(createTokenCheckURL(port.toInt(), access_token),
+			HttpMethod.GET, request, String::class.java)
+		assertEquals(HttpStatus.OK, response.statusCode)
+	}
+
 	private fun createRequestWithToken(token: String): HttpEntity<Void> {
 		val headers = HttpHeaders()
 		headers.contentType = MediaType.APPLICATION_JSON_UTF8

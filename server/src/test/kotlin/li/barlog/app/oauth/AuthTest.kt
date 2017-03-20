@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 
@@ -119,6 +120,19 @@ class AuthTest {
 
 		val map = mapper.readValue(resultBody, Map::class.java)
 		Assert.assertEquals("ok", map["status"])
+	}
+
+	@Test
+	fun tokenCheck() {
+		val access_token = requestToken().first
+
+		mvc
+			.perform(
+				MockMvcRequestBuilders.get(createTokenCheckURL(access_token))
+					.header("Authorization", basicAuthHeader())
+					.with(csrf().asHeader()))
+			.andExpect(status().isOk)
+			.andReturn().response.contentAsString
 	}
 
 	private fun requestToken(): Pair<String, String> {

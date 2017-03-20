@@ -1,12 +1,6 @@
 spring:
-  main.banner-mode: "off"
   output.ansi.enabled: always
 
 authentication:
   access_token_validity_seconds: 5
   refresh_token_validity_seconds: 300
-
-logging:
-  level:
-    root: INFO
-    org.springframework.security: DEBUG
