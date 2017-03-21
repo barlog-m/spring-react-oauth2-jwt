@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+	<property name="CONSOLE_LOG_PATTERN" value="%date{yyyy.MM.dd HH:mm:ss.SSS} %highlight(%-5level) %green([%thread]) %cyan(%logger{-1})->%blue(%method): %message%n%wEx"/>
+	<include resource="org/springframework/boot/logging/logback/base.xml"/>
+</configuration>
