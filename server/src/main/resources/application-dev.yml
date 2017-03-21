@@ -2,5 +2,5 @@ spring:
   output.ansi.enabled: always
 
 authentication:
-  access_token_validity_seconds: 120
-  refresh_token_validity_seconds: 180
+  access_token_validity_seconds: 30
+  refresh_token_validity_seconds: 60

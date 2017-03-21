@@ -17,13 +17,13 @@ open class ResourceServerConfig : ResourceServerConfigurerAdapter() {
 	private lateinit var tokenServices: DefaultTokenServices
 
 	override fun configure(http: HttpSecurity) {
-		// @formatter:off
+		// @formatter:offyarn
 		http
 			.requestMatchers().antMatchers("/api/**")
 			.and()
 				.authorizeRequests()
 					.antMatchers("/api/**").hasRole("USER")
-					.anyRequest().authenticated()
+					.anyRequest().denyAll()
 			.and()
 				.sessionManagement()
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

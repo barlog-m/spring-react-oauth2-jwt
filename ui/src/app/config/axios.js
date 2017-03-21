@@ -56,8 +56,9 @@ const responseInterceptor = dispatch => {
 			return Promise.reject(null);
 		}
 
+		// log out if unauthorized (401)
 		const status = get(error, "response.status", 0);
-		if ((status === 403) || (status === 401)) {
+		if (status === 401) {
 			dispatch(auth.doLogOut());
 			return Promise.reject(null);
 		}
