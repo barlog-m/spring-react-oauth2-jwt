@@ -18,13 +18,13 @@ export const getToken = (username, password) => {
 	});
 };
 
-export const refreshToken = () => {
+export const refreshToken = refresh_token => {
 	return new Promise((resolve, reject) => {
 		const xmlHttp = new XMLHttpRequest();
 		xmlHttp.timeout = connectionSettings.TIMEOUT;
 		xmlHttp.onreadystatechange = () => onReadyStateChange(xmlHttp, resolve, reject);
 		xmlHttp.ontimeout = error => reject(error);
-		xmlHttp.open("POST", createTokenRefreshUrl(getRefreshToken()), true);
+		xmlHttp.open("POST", createTokenRefreshUrl(refresh_token), true);
 		xmlHttp.send();
 	});
 };
@@ -81,10 +81,6 @@ export const setTokens = (access_token, refersh_token) => {
 	setRefreshToken(refersh_token);
 };
 
-export const isAccessTokenExpired = () => isTokenExpired(getAccessToken());
-
-export const isRefreshTokenExpired = () => isTokenExpired(getRefreshToken());
-
 export const removeAccessToken = () => {
 	localStorage.removeItem(ACCESS_TOKEN);
 };
@@ -97,6 +93,10 @@ export const removeTokens = () => {
 	removeAccessToken();
 	removeRefreshToken();
 };
+
+export const isAccessTokenExpired = token => isTokenExpired(token);
+
+export const isRefreshTokenExpired = token => isTokenExpired(token);
 
 export const isTokenExpired = token => {
 	if (!token) return true;

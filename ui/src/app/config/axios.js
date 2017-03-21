@@ -16,37 +16,51 @@ const requestInterceptor = dispatch => {
 		config.timeout = connectionSettings.TIMEOUT;
 		config.headers["Accept"] = "application/json;charset=UTF-8";
 		config.headers["Content-Type"] = "application/json;charset=UTF-8";
+
 		let cancel;
 		config.cancelToken = new axios.CancelToken(c => {
 			cancel = c;
 		});
-		let access_token = tokenUtils.getAccessToken();
+
+		const cancelRequest = () => {
+			dispatch(auth.doLogOut());
+			cancel();
+			return config;
+		};
+
+		const access_token = tokenUtils.getAccessToken();
+		if (!access_token) {
+			console.debug("axios: access token not found");
+			return cancelRequest();
+		}
+
+		const refresh_token = tokenUtils.getRefreshToken();
+		if (!refresh_token) {
+			console.debug("axios: refresh token not found");
+			return cancelRequest();		}
 
 		// Checking token expiration before any request
-		if (access_token && tokenUtils.isAccessTokenExpired()) {
+		if (access_token && tokenUtils.isAccessTokenExpired(access_token)) {
 			console.debug("axios: access token expired");
 
-			if (tokenUtils.getRefreshToken() && tokenUtils.isRefreshTokenExpired()) {
+			if (refresh_token && tokenUtils.isRefreshTokenExpired(refresh_token)) {
 				console.debug("axios: refresh token expired");
-				dispatch(auth.doLogOut());
-				cancel();
-				return config;
+				return cancelRequest();
 			} else {
 				console.debug("axios: refresh token");
-				return tokenUtils.refreshToken()
+				return tokenUtils.refreshToken(refresh_token)
 					.then(success => {
 							console.debug("axios: token refresh success", success);
-							tokenUtils.setAccessToken(success.access_token);
-							tokenUtils.setRefreshToken(success.refresh_token);
+							tokenUtils.setAccessToken(success.data.access_token);
+							tokenUtils.setRefreshToken(success.data.refresh_token);
 
-							config.headers["Authorization"] = `Bearer ${success.access_token}`;
+							config.headers["Authorization"] = `Bearer ${success.data.access_token}`;
 
 							return config;
 						},
 						error => {
 							console.debug("axios: token refresh error", error);
 							dispatch(auth.doLogOut());
-							config.cancelToken = axios.CancelToken;
 							cancel();
 							return Promise.reject(null);
 						}

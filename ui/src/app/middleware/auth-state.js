@@ -3,8 +3,6 @@ import * as types from "../actions/types";
 import * as auth from "../actions/auth";
 
 const authState = store => next => action => {
-	console.debug("auth state middleware", action);
-
 	switch (action.type) {
 		case types.AUTH_STATE_LOAD:
 			const token = tokenUtils.getAccessToken();
