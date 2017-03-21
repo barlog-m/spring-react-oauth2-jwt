@@ -28,49 +28,15 @@ const requestInterceptor = dispatch => {
 			return config;
 		};
 
-		const access_token = tokenUtils.getAccessToken();
-		if (!access_token) {
-			console.debug("axios: access token not found");
-			return cancelRequest();
-		}
-
-		const refresh_token = tokenUtils.getRefreshToken();
-		if (!refresh_token) {
-			console.debug("axios: refresh token not found");
-			return cancelRequest();		}
-
-		// Checking token expiration before any request
-		if (access_token && tokenUtils.isAccessTokenExpired(access_token)) {
-			console.debug("axios: access token expired");
-
-			if (refresh_token && tokenUtils.isRefreshTokenExpired(refresh_token)) {
-				console.debug("axios: refresh token expired");
+		return tokenUtils.validateToken()
+			.then(access_token => {
+				config.headers["Authorization"] = `Bearer ${access_token}`;
+				return config;
+			})
+			.catch(error => {
+				console.debug("axios: token refresh error", error);
 				return cancelRequest();
-			} else {
-				console.debug("axios: refresh token");
-				return tokenUtils.refreshToken(refresh_token)
-					.then(success => {
-							console.debug("axios: token refresh success", success);
-							tokenUtils.setAccessToken(success.data.access_token);
-							tokenUtils.setRefreshToken(success.data.refresh_token);
-
-							config.headers["Authorization"] = `Bearer ${success.data.access_token}`;
-
-							return config;
-						},
-						error => {
-							console.debug("axios: token refresh error", error);
-							dispatch(auth.doLogOut());
-							cancel();
-							return Promise.reject(null);
-						}
-					);
-			}
-		} else {
-			config.headers["Authorization"] = `Bearer ${access_token}`;
-			dispatch(global.busy());
-			return config;
-		}
+			});
 	}, error => {
 		dispatch(global.ready());
 		return Promise.reject(error);

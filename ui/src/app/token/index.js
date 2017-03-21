@@ -7,24 +7,30 @@ import * as oauth from "../config/oauth";
 const ACCESS_TOKEN = "access_token";
 const REFRESH_TOKEN = "refresh_token";
 
-export const getToken = (username, password) => {
-	return new Promise((resolve, reject) => {
-		const xmlHttp = new XMLHttpRequest();
-		xmlHttp.timeout = connectionSettings.TIMEOUT;
-		xmlHttp.onreadystatechange = () => onReadyStateChange(xmlHttp, resolve, reject);
-		xmlHttp.ontimeout = error => reject(error);
-		xmlHttp.open("POST", createTokenRequestUrl(username, password), true);
-		xmlHttp.send();
-	});
+export const requestToken = (username, password) =>
+	request(() => createTokenRequestUrl(username, password));
+
+export const refreshToken = (refresh_token) => {
+	return request(() => createTokenRefreshUrl(refresh_token))
+		.then(success => {
+				setAccessToken(success.data.access_token);
+				setRefreshToken(success.data.refresh_token);
+				return success.data.access_token;
+			},
+			error => {
+				console.debug("error refresh token", error);
+				return Promise.reject(null);
+			}
+		);
 };
 
-export const refreshToken = refresh_token => {
+const request = url => {
 	return new Promise((resolve, reject) => {
 		const xmlHttp = new XMLHttpRequest();
 		xmlHttp.timeout = connectionSettings.TIMEOUT;
 		xmlHttp.onreadystatechange = () => onReadyStateChange(xmlHttp, resolve, reject);
 		xmlHttp.ontimeout = error => reject(error);
-		xmlHttp.open("POST", createTokenRefreshUrl(refresh_token), true);
+		xmlHttp.open("POST", url(), true);
 		xmlHttp.send();
 	});
 };
@@ -103,6 +109,31 @@ export const isTokenExpired = token => {
 
 	const {exp} = jwtDecode(token);
 	// exp in seconds
-	// token is expired if lifetime smaller then one minute
-	return (exp - Math.round(Date.now() / 1000)) < 60;
+	// token is expired if lifetime smaller then connection timeout
+	return (exp * 1000 - Date.now()) < connectionSettings.TIMEOUT;
+};
+
+export const validateToken = () => {
+	return new Promise((resolve, reject) => {
+		const access_token = getAccessToken();
+		if (!access_token) {
+			reject("no access token");
+		}
+
+		const refresh_token = getRefreshToken();
+		if (!refresh_token) {
+			reject("no refresh token");
+		}
+
+		if (isAccessTokenExpired(access_token) &&
+			!isRefreshTokenExpired(refresh_token)) {
+			return refreshToken(refresh_token);
+		} else if (
+			isAccessTokenExpired(access_token) &&
+			isRefreshTokenExpired(refresh_token)) {
+			reject("all tokens expired");
+		} else {
+			resolve(access_token);
+		}
+	});
 };

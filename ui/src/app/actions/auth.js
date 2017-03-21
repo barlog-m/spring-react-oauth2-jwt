@@ -1,6 +1,6 @@
 import {push} from "react-router-redux";
 
-import {getToken} from "../token";
+import {requestToken} from "../token";
 
 import * as types from "./types";
 import * as global from "./global";
@@ -38,7 +38,7 @@ export const badCredentialsClear = () => ({
 export const doLogIn = (username, password, route) => dispatch => {
 	console.debug("do log-in");
 
-	return getToken(username, password)
+	return requestToken(username, password)
 		.then(response => {
 			dispatch(save(response));
 			dispatch(push(route));

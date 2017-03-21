@@ -2,7 +2,7 @@ import jwtDecode from "jwt-decode";
 
 import * as types from "../actions/types";
 
-const token2user = (token) => {
+const token2user = token => {
 	try {
 		return {
 			...jwtDecode(token),
