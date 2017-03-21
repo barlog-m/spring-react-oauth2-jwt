@@ -1,8 +1,6 @@
 import {push} from "react-router-redux";
-import axios from "axios";
-import get from "lodash.get";
 
-import {createTokenRequestUrl} from "../token";
+import {getToken} from "../token";
 
 import * as types from "./types";
 import * as global from "./global";
@@ -40,19 +38,15 @@ export const badCredentialsClear = () => ({
 export const doLogIn = (username, password, route) => dispatch => {
 	console.debug("do log-in");
 
-	const url = createTokenRequestUrl(username, password);
-	const config = {method: "post"};
-
-	return axios(url, config)
+	return getToken(username, password)
 		.then(response => {
-			dispatch(save(response.data));
+			dispatch(save(response));
 			dispatch(push(route));
 		})
 		.catch(error => {
 			if (error) {
-				const status = get(error, "response.status", 0);
 				console.debug("log in error", error);
-				if (status === 400) {
+				if (error.status === 400) {
 					dispatch(badCredentials());
 				} else {
 					dispatch(global.error(error));
