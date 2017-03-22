@@ -22,9 +22,9 @@ const requestInterceptor = dispatch => {
 			cancel = c;
 		});
 
-		const cancelRequest = () => {
+		const cancelRequest = message => {
 			dispatch(auth.doLogOut());
-			cancel();
+			cancel(message);
 			return config;
 		};
 
@@ -35,7 +35,7 @@ const requestInterceptor = dispatch => {
 			})
 			.catch(error => {
 				console.debug("axios: token refresh error", error);
-				return cancelRequest();
+				return cancelRequest("token refresh error");
 			});
 	}, error => {
 		dispatch(global.ready());
