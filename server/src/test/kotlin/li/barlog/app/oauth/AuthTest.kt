@@ -10,6 +10,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment
 import org.springframework.http.MediaType
@@ -19,11 +20,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 
@@ -43,6 +44,9 @@ class AuthTest {
 
 	@Autowired
 	private lateinit var mapper: ObjectMapper
+
+	@Value("\${api.prefix}")
+	private val apiPrefix = ""
 
 	private lateinit var mvc: MockMvc
 
@@ -69,7 +73,7 @@ class AuthTest {
 	fun postWithoutAuthentication() {
 		mvc
 			.perform(
-				post("/api/test")
+				post("$apiPrefix/test")
 					.accept(MediaType.APPLICATION_JSON_UTF8)
 					.contentType(MediaType.APPLICATION_JSON_UTF8)
 					.with(csrf().asHeader()))
@@ -82,7 +86,7 @@ class AuthTest {
 
 		val resultBody = mvc
 			.perform(
-				post("/api/test")
+				post("$apiPrefix/test")
 					.accept(MediaType.APPLICATION_JSON_UTF8)
 					.contentType(MediaType.APPLICATION_JSON_UTF8)
 					.header("Authorization", "Bearer $access_token")
@@ -110,7 +114,7 @@ class AuthTest {
 
 		val resultBody = mvc
 			.perform(
-				post("/api/test")
+				post("$apiPrefix/test")
 					.accept(MediaType.APPLICATION_JSON_UTF8)
 					.contentType(MediaType.APPLICATION_JSON_UTF8)
 					.header("Authorization", "Bearer $access_token")
@@ -128,7 +132,7 @@ class AuthTest {
 
 		mvc
 			.perform(
-				MockMvcRequestBuilders.get(createTokenCheckURL(access_token))
+				get(createTokenCheckURL(access_token))
 					.header("Authorization", basicAuthHeader())
 					.with(csrf().asHeader()))
 			.andExpect(status().isOk)
