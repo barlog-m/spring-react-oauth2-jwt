@@ -22,7 +22,7 @@ open class AuthTestResourceServerConfig : ResourceServerConfigurerAdapter() {
 			.and()
 				.authorizeRequests()
 					.antMatchers("/api/**").hasRole("USER")
-					.anyRequest().authenticated()
+					.anyRequest().denyAll()
 			.and()
 				.sessionManagement()
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
