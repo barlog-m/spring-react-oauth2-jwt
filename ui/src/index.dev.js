@@ -13,7 +13,7 @@ import thunkMiddleware from "redux-thunk";
 import {Router, browserHistory} from "react-router";
 import {syncHistoryWithStore, routerReducer, routerMiddleware} from "react-router-redux";
 
-import createLogger from "redux-logger";
+import reduxLogger from "redux-logger";
 import {AppContainer} from "react-hot-loader";
 
 import reducers from "./app/reducers";
@@ -27,12 +27,10 @@ const rootReducer = combineReducers({
 	routing: routerReducer
 });
 
-const logger = createLogger();
-
 const middleware = applyMiddleware(
 	routerMiddleware(browserHistory),
 	thunkMiddleware,
-	// logger,
+	reduxLogger,
 	authStateMiddleware
 );
 
