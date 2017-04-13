@@ -4,8 +4,8 @@ buildscript {
 		springBootVer = '1.5.2.RELEASE'
 		propdepsPluginVer = '0.0.7'
 
-		thymeleafVer = '3.0.3.RELEASE'
-		kotlinLoggingVer = '1.4.2'
+		thymeleafVer = '3.0.5.RELEASE'
+		kotlinLoggingVer = '1.4.4'
 
 		icu4jVer = '58.2'
 
