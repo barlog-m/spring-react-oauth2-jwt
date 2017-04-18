@@ -10,16 +10,16 @@ const REFRESH_TOKEN = "refresh_token";
 export const requestToken = (username, password) =>
 	request(() => createTokenRequestUrl(username, password));
 
-export const refreshToken = (refresh_token) => {
+export const refreshToken = (refresh_token, resolve, reject) => {
 	return request(() => createTokenRefreshUrl(refresh_token))
 		.then(success => {
 				setAccessToken(success.data.access_token);
 				setRefreshToken(success.data.refresh_token);
-				return success.data.access_token;
+				resolve(success.data.access_token);
 			},
 			error => {
 				console.debug("error refresh token", error);
-				return Promise.reject(null);
+				reject("error refresh token");
 			}
 		);
 };
@@ -36,7 +36,7 @@ const request = url => {
 };
 
 const onReadyStateChange = (xmlHttp, resolve, reject) => {
-	if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+	if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
 		resolve(createResultObject(xmlHttp));
 	} else if (xmlHttp.status >= 400) {
 		reject(createResultObject(xmlHttp));
@@ -118,16 +118,18 @@ export const validateToken = () => {
 		const access_token = getAccessToken();
 		if (!access_token) {
 			reject("no access token");
+			return;
 		}
 
 		const refresh_token = getRefreshToken();
 		if (!refresh_token) {
 			reject("no refresh token");
+			return;
 		}
 
 		if (isAccessTokenExpired(access_token) &&
 			!isRefreshTokenExpired(refresh_token)) {
-			return refreshToken(refresh_token);
+			return refreshToken(refresh_token, resolve, reject);
 		} else if (
 			isAccessTokenExpired(access_token) &&
 			isRefreshTokenExpired(refresh_token)) {

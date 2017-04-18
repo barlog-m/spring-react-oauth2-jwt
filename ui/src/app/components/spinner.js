@@ -1,6 +1,7 @@
 import "../../css/spinner.css";
 
-import React, {PropTypes} from "react";
+import React from "react";
+import PropTypes from "prop-types";
 
 const Spinner = props => (
 	<div className="loading" style={{visibility: !props.visible && "hidden"}}>

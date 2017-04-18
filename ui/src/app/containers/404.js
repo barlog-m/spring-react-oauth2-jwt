@@ -13,7 +13,9 @@ const NotFound = props => (
 				</button>
 			</div>
 			<div className="panel-body">
-				<center>Not Found</center>
+				<div style={{textAlign: "center"}}>
+					Not Found
+				</div>
 			</div>
 		</div>
 	</div>

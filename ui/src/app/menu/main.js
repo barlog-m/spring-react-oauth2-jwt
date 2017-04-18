@@ -4,7 +4,7 @@ import {Link} from "react-router";
 import NavItem from "../bootstrap/item";
 import AuthMenu from "./auth";
 
-const Menu = props => (
+const MainMenu = props => (
 	<nav className="navbar navbar-default navbar-fixed-top">
 		<div className="container">
 			<div className="navbar-header">
@@ -21,4 +21,4 @@ const Menu = props => (
 	</nav>
 );
 
-export default Menu;
+export default MainMenu;
