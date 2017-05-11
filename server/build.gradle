@@ -1,13 +1,13 @@
 buildscript {
 	ext {
-		kotlinVer = '1.1.1'
-		springBootVer = '1.5.2.RELEASE'
+		kotlinVer = '1.1.2-3'
+		springBootVer = '1.5.3.RELEASE'
 		propdepsPluginVer = '0.0.7'
 
 		thymeleafVer = '3.0.5.RELEASE'
 		kotlinLoggingVer = '1.4.4'
 
-		icu4jVer = '58.2'
+		icu4jVer = '59.1'
 
 		apacheHttpClientVer = '4.5.3'
 		jsonPathVer = '2.2.0'
@@ -28,7 +28,7 @@ buildscript {
 plugins {
 	// gradle dependencyUpdates -Drevision=release
 	id 'com.github.ben-manes.versions' version '0.14.0'
-	id 'com.palantir.docker' version '0.12.0'
+	id 'com.palantir.docker' version '0.13.0'
 }
 
 apply plugin: 'kotlin'
@@ -109,7 +109,7 @@ docker() {
 	name 'oauth2-app'
 	tags 'latest'
 	files tasks.jar.outputs
-	dockerfile 'src/main/docker/Dockerfile'
+	dockerfile file('src/main/docker/Dockerfile')
 	buildArgs([
 		PORT     : '8081',
 		JAVA_OPTS: '-Xms64m -Xmx128m'
