@@ -1,5 +1,3 @@
-@file:JvmName("UnsecureApp")
-
 package li.barlog.app
 
 import li.barlog.app.config.AuthenticationConfig
@@ -38,12 +36,9 @@ import org.springframework.context.annotation.FilterType
         )
     )
 )
-open class UnsecureApp {
-    companion object {
-        @JvmStatic
-        fun main(vararg args: String) {
-            SpringApplicationBuilder(UnsecureApp::class.java)
-                .registerShutdownHook(true).run(*args)
-        }
-    }
+open class UnsecureApp
+
+fun main(vararg args: String) {
+	SpringApplicationBuilder(App::class.java)
+		.registerShutdownHook(true).run(*args)
 }

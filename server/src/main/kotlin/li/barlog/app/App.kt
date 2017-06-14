@@ -1,5 +1,3 @@
-@file:JvmName("App")
-
 package li.barlog.app
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
@@ -19,12 +17,9 @@ import org.springframework.context.annotation.FilterType
 		)
 	)
 )
-open class App {
-	companion object {
-		@JvmStatic
-		fun main(vararg args: String) {
-			SpringApplicationBuilder(App::class.java)
-				.registerShutdownHook(true).run(*args)
-		}
-	}
+open class App
+
+fun main(vararg args: String) {
+	SpringApplicationBuilder(App::class.java)
+		.registerShutdownHook(true).run(*args)
 }

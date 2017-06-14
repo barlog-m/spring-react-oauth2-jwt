@@ -1,6 +1,6 @@
 plugins {
 	// gradle dependencyUpdates -Drevision=release
-	id 'com.github.ben-manes.versions' version '0.14.0'
+	id 'com.github.ben-manes.versions' version '0.15.0'
 	id "com.moowork.node" version "1.1.1"
 }
 
@@ -37,7 +37,7 @@ task yarnBuild(type: YarnTask) {
 build.dependsOn(yarnBuild)
 
 node {
-	version = '7.9.0'
-	yarnVersion = '0.23.2'
+	version = '8.1.1'
+	yarnVersion = '0.24.6'
 	download = false
 }
