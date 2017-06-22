@@ -5,8 +5,8 @@
 	"scripts": {
 		"start": "NODE_ENV=development MOCK=false webpack-dev-server",
 		"mock": "NODE_ENV=development MOCK=true webpack-dev-server",
-		"build": "NODE_ENV=production webpack --progress --profile --bail",
-		"test": "MOCK=true jest",
+		"build": "NODE_ENV=production webpack --bail",
+		"test": "MOCK=true jest --bail",
 		"clean": "rimraf dist",
 		"rm": "rimraf dist node_modules",
 		"lint": "eslint src",
