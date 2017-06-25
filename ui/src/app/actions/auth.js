@@ -1,9 +1,9 @@
 import {push} from "react-router-redux";
 
-import {requestToken} from "../token";
+import {requestToken} from "../token/token";
+import * as app from "./app";
 
 import * as types from "./types";
-import * as global from "./global";
 
 export const logIn = payload => ({
 	type: types.AUTH_LOG_IN,
@@ -45,11 +45,11 @@ export const doLogIn = (username, password, route) => dispatch => {
 		})
 		.catch(error => {
 			if (error) {
-				console.debug("log in error", error);
-				if (error.status === 400) {
+				console.debug("log-in error", error);
+				if (error.code === 400) {
 					dispatch(badCredentials());
 				} else {
-					dispatch(global.error(error));
+					dispatch(app.error(error));
 				}
 			}
 		});

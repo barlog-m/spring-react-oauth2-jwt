@@ -1,14 +1,14 @@
 import * as types from "./types";
 
 export const busy = () => ({
-	type: types.BUSY
+	type: types.STATE_BUSY
 });
 
 export const ready = () => ({
-	type: types.READY
+	type: types.STATE_READY
 });
 
 export const error = payload => ({
-	type: types.ERROR,
+	type: types.STATE_ERROR,
 	payload
 });

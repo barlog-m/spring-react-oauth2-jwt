@@ -1,6 +1,6 @@
-export const BUSY = "BUSY";
-export const READY = "READY";
-export const ERROR = "ERROR";
+export const STATE_BUSY = "STATE_BUSY";
+export const STATE_READY = "STATE_READY";
+export const STATE_ERROR = "STATE_ERROR";
 
 export const AUTH_LOG_IN = "AUTH_LOG_IN";
 export const AUTH_LOG_OUT = "AUTH_LOG_OUT";

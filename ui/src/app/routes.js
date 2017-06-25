@@ -13,6 +13,7 @@ import NotFound from "./containers/404";
 import LogIn from "./containers/auth/log-in";
 import Foo from "./containers/foo";
 import Bar from "./containers/bar";
+import Errors from "./containers/Errors";
 
 const createRoutes = store => {
 	const dispatch = store.dispatch;
@@ -28,6 +29,8 @@ const createRoutes = store => {
 			<Route path="bar"
 				   component={Bar}
 				   onEnter={authRequired(store, () => dispatch(bar.getList()))}/>
+			<Route path="errors"
+				   component={Errors}/>
 			<Route path="*" component={NotFound}/>
 		</Route>
 	);

@@ -4,8 +4,8 @@ import * as auth from "./actions/auth";
  * @param {object} store - Redux Store
  * @param {function} action - Closure function call after authentication success
  */
-const authRequired = (store, action) => {
-	return (nextState, replace) => {
+const authRequired = (store, action) =>
+	(nextState, replace) => {
 		store.dispatch(auth.load());
 
 		if (!store.getState().user.isAuthenticated) {
@@ -19,6 +19,5 @@ const authRequired = (store, action) => {
 			}
 		}
 	};
-};
 
 export default authRequired;

@@ -118,20 +118,14 @@ if (process.env.NODE_ENV === "production") {
 		new webpack.optimize.OccurrenceOrderPlugin(),
 		new webpack.optimize.UglifyJsPlugin({
 			sourceMap: true,
-			minimize: true
+			minimize: true,
+			compress: {
+				pure_funcs: [ "console.debug" ],
+				warnings: false
+			}
 		}),
 		new webpack.NoEmitOnErrorsPlugin()
 	];
-
-	config.module.rules = [
-		{
-			test: /\.js$/,
-			loader: "strip-loader?",
-			options: {
-				strip: ["console.debug"]
-			}
-		}
-	].concat(config.module.rules);
 
 	config.output.path = path.join(__dirname, "dist");
 	config.output.publicPath = "/ui/";

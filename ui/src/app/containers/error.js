@@ -4,7 +4,7 @@ import isEmpty from "lodash.isempty";
 
 import Modal from "../bootstrap/modal";
 
-import * as global from "../actions/global";
+import * as app from "../actions/app";
 
 const Error = props => (
 	<Modal show={!isEmpty(props.error)}>
@@ -21,23 +21,8 @@ const Error = props => (
 					</h4>
 				</div>
 				<div className="modal-body">
-					<div className="form-horizontal">
-						<div className="form-group">
-							<label className="control-label col-sm-3">Code</label>
-							<div className="col-sm-9">
-								<p className="form-control-static">
-									{props.error.code}
-								</p>
-							</div>
-						</div>
-						<div className="form-group">
-							<label className="control-label col-sm-3">Message</label>
-							<div className="col-sm-9">
-								<p className="form-control-static">
-									{props.error.message}
-								</p>
-							</div>
-						</div>
+					<div style={{textAlign: "center"}}>
+						<p>{props.error}</p>
 					</div>
 				</div>
 				<div className="modal-footer">
@@ -53,11 +38,11 @@ const Error = props => (
 );
 
 const mapStateToProps = state => ({
-	error: state.global.error
+	error: state.app.error
 });
 
 const mapDispatchToProps = dispatch => ({
-	close: () => dispatch(global.ready())
+	close: () => dispatch(app.ready())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Error);

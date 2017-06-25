@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as global from "./global";
+import * as app from "./app";
 
 export const get = (url, action) => dispatch =>
 	dispatch(request(url, {data: {}}, action));
@@ -10,6 +10,8 @@ export const post = (url, data) => dispatch =>
 export const request = (url, config, action, ...actions) => dispatch =>
 	axios(url, config)
 		.then(response => {
+			console.debug("server.request.response", response);
+
 			if (action !== void 0) {
 				dispatch(action(response.data));
 			}
@@ -19,8 +21,9 @@ export const request = (url, config, action, ...actions) => dispatch =>
 			});
 		})
 		.catch(error => {
+			console.debug("server.request.error", error);
+
 			if (error) {
-				console.debug("server.request", error);
-				dispatch(global.error(error));
+				dispatch(app.error(error));
 			}
 		});

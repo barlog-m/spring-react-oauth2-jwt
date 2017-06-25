@@ -1,4 +1,4 @@
-import * as tokenUtils from "../token";
+import * as tokenUtils from "../token/token";
 import * as types from "../actions/types";
 import * as auth from "../actions/auth";
 

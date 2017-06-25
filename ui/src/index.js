@@ -17,6 +17,7 @@ import {
 
 import reducers from "./app/reducers";
 import createRoutes from "./app/routes";
+
 import authStateMiddleware from "./app/middleware/auth-state";
 
 const rootReducer = combineReducers({

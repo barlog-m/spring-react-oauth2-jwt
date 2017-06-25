@@ -1,15 +1,16 @@
 buildscript {
 	ext {
-		kotlinVer = '1.1.2-5'
+		kotlinVer = '1.1.3'
 		springBootVer = '1.5.4.RELEASE'
+		kotlinLoggingVer = '1.4.5'
 
 		thymeleafVer = '3.0.6.RELEASE'
-		kotlinLoggingVer = '1.4.4'
 
 		icu4jVer = '59.1'
 
-		apacheHttpClientVer = '4.5.3'
+		okHttpVer = '3.8.0'
 		jsonPathVer = '2.2.0'
+
 		propdepsPluginVer = '0.0.10.RELEASE'
 		versionPluginVer = '0.15.0'
 		dockerPluginVer = '0.13.0'
@@ -90,7 +91,7 @@ dependencies {
 	testCompile 'org.springframework.security:spring-security-test'
 	testCompile "com.jayway.jsonpath:json-path:$jsonPathVer"
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
-	testCompile "org.apache.httpcomponents:httpclient:$apacheHttpClientVer"
+	testCompile "com.squareup.okhttp3:okhttp:$okHttpVer"
 
 	kapt 'org.springframework.boot:spring-boot-configuration-processor'
 	optional 'org.springframework.boot:spring-boot-configuration-processor'

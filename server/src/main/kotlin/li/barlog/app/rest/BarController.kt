@@ -1,5 +1,6 @@
 package li.barlog.app.rest
 
+import li.barlog.app.model.Bar
 import li.barlog.app.service.BarService
 import mu.KLogging
 import org.springframework.http.MediaType
@@ -20,7 +21,7 @@ class BarController constructor(
 	companion object : KLogging()
 
 	@GetMapping
-	fun get() = run {
+	fun get(): ResponseEntity<List<Bar>> = run {
 		logger.info { "get list" }
 		ResponseEntity.ok(barService.list())
 	}

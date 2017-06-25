@@ -14,6 +14,7 @@ const MainMenu = props => (
 				<ul className="nav navbar-nav">
 					<NavItem to="foo">Foo</NavItem>
 					<NavItem to="bar">Bar</NavItem>
+					<NavItem to="errors">Errors</NavItem>
 				</ul>
 				<AuthMenu/>
 			</div>
