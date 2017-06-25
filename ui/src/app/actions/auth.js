@@ -1,8 +1,8 @@
 import {push} from "react-router-redux";
 
 import {requestToken} from "../token/token";
-import * as app from "./app";
 
+import * as app from "./app";
 import * as types from "./types";
 
 export const logIn = payload => ({
