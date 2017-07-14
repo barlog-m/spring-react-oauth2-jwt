@@ -30,14 +30,14 @@ task deleteDist(type: Delete) {
 clean.dependsOn(deleteDist)
 
 task yarnBuild(type: YarnTask) {
-	dependsOn deleteDist, yarn_install
+	dependsOn deleteDist, yarn_install, test
 	args = ['run', 'build']
 }
 
 build.dependsOn(yarnBuild)
 
 node {
-	version = '8.1.2'
-	yarnVersion = '0.24.6'
-	download = false
+	version = '8.1.4'
+	yarnVersion = '0.27.5'
+	download = true
 }

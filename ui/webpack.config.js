@@ -72,6 +72,7 @@ const config = {
 	},
 	devServer: {
 		port: 8080,
+		disableHostCheck: true,
 
 		historyApiFallback: true,
 		hot: true,
