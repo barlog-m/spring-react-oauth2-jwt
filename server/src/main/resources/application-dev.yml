@@ -4,3 +4,7 @@ spring:
 authentication:
   access-token-validity-seconds: 10
   refresh-token-validity-seconds: 60
+
+logging:
+  level:
+    org.springframework.security: DEBUG

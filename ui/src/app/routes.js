@@ -13,7 +13,7 @@ import NotFound from "./containers/404";
 import LogIn from "./containers/auth/log-in";
 import Foo from "./containers/foo";
 import Bar from "./containers/bar";
-import Errors from "./containers/Errors";
+import Errors from "./containers/errors";
 
 const createRoutes = store => {
 	const dispatch = store.dispatch;

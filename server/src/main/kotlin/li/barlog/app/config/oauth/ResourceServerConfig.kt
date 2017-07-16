@@ -1,5 +1,7 @@
 package li.barlog.app.config.oauth
 
+import li.barlog.app.security.AuthenticationLoggerFilter
+import li.barlog.app.security.SettingsUserDetailsService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -8,6 +10,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 
 @Configuration
@@ -16,9 +19,14 @@ open class ResourceServerConfig : ResourceServerConfigurerAdapter() {
 	@Autowired
 	private lateinit var tokenServices: DefaultTokenServices
 
+	@Autowired
+	private lateinit var userDetailsService: SettingsUserDetailsService
+
 	override fun configure(http: HttpSecurity) {
 		// @formatter:offyarn
 		http
+			.addFilterAfter(AuthenticationLoggerFilter(userDetailsService),
+				FilterSecurityInterceptor::class.java)
 			.requestMatchers().antMatchers("/api/**")
 			.and()
 				.authorizeRequests()
