@@ -7,20 +7,20 @@ plugins {
 apply plugin: 'base'
 
 // https://github.com/srs/gradle-node-plugin
-// gradle clean yarnBuild
+// gradle clean npmBuild
 
-task yarnLint(type: YarnTask) {
-	dependsOn yarn_install
+task npmLint(type: NpmTask) {
+	dependsOn npm_install
 	args = ['run', 'lint']
 }
 
-task yarnTest(type: YarnTask) {
-	dependsOn yarnLint
+task npmTest(type: NpmTask) {
+	dependsOn npmLint
 	args = ['run', 'test']
 }
 
 task test() {
-	dependsOn yarnTest
+	dependsOn npmTest
 }
 
 task deleteDist(type: Delete) {
@@ -34,15 +34,15 @@ task deleteNodeModules(type: Delete) {
 clean.dependsOn(deleteDist)
 clean.dependsOn(deleteNodeModules)
 
-task yarnBuild(type: YarnTask) {
-	dependsOn deleteDist, yarn_install, test
+task npmBuild(type: NpmTask) {
+	dependsOn deleteDist, npm_install, test
 	args = ['run', 'build']
 }
 
-build.dependsOn(yarnBuild)
+build.dependsOn(npmBuild)
 
 node {
 	version = '8.2.1'
-	yarnVersion = '0.27.5'
+	npmVersion = '5.3.0'
 	download = true
 }

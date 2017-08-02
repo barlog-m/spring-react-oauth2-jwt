@@ -1,17 +1,18 @@
 UI
 =============================
 
-Necessary plugins for Firefox or Google Chrome:
-- [React Developer Tools](https://github.com/facebook/react-devtools)
-- [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension)
+Necessary plugins for Google Chrome
 
-Action objects in format of [Flux Standard Action](https://github.com/acdlite/flux-standard-action)
+[React Developer Tools](https://github.com/facebook/react-devtools)
+[Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension)
 
-* `yarn` — install dependencies
-* `yarn run start` — run development server
-* `yarn run run mock` — run development server with mocks
-* `yarn run run test` — tests
-* `yarn run run lint` — linter
-* `yarn run run build` — build
-* `yarn run run clean` — clean
-* `yarn run run rm` — clean and delete `node_modules`
+[Flux Standard Action](https://github.com/acdlite/flux-standard-action)
+
+* `npm install` — download dependencies
+* `npm start` — run development server
+* `npm run mock` — run development server with mocks
+* `npm test` — tests
+* `npm run lint` — linter
+* `npm run build` — build
+* `npm run clean` — clean
+* `npm run rm` — clean and delete yarn_modules
