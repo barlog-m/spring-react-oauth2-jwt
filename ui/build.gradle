@@ -1,7 +1,7 @@
 plugins {
 	// gradle dependencyUpdates -Drevision=release
 	id 'com.github.ben-manes.versions' version '0.15.0'
-	id "com.moowork.node" version "1.1.1"
+	id 'com.moowork.node' version '1.2.0'
 }
 
 apply plugin: 'base'
@@ -27,7 +27,12 @@ task deleteDist(type: Delete) {
 	delete 'dist'
 }
 
+task deleteNodeModules(type: Delete) {
+	delete 'node_modules'
+}
+
 clean.dependsOn(deleteDist)
+clean.dependsOn(deleteNodeModules)
 
 task yarnBuild(type: YarnTask) {
 	dependsOn deleteDist, yarn_install, test
@@ -37,7 +42,7 @@ task yarnBuild(type: YarnTask) {
 build.dependsOn(yarnBuild)
 
 node {
-	version = '8.1.4'
+	version = '8.2.1'
 	yarnVersion = '0.27.5'
 	download = true
 }
