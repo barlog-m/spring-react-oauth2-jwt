@@ -20,7 +20,7 @@ task npmTest(type: NpmTask) {
 }
 
 task test() {
-	dependsOn npmTest
+	dependsOn npmLint, npmTest
 }
 
 task deleteDist(type: Delete) {
@@ -42,7 +42,7 @@ task npmBuild(type: NpmTask) {
 build.dependsOn(npmBuild)
 
 node {
-	version = '8.2.1'
-	npmVersion = '5.3.0'
+	version = '8.9.0'
+	npmVersion = '5.5.1'
 	download = true
 }

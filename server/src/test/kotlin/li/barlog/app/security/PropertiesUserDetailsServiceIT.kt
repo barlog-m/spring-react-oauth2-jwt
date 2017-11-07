@@ -18,9 +18,9 @@ import org.springframework.test.context.junit4.SpringRunner
 	webEnvironment = WebEnvironment.NONE
 )
 @ActiveProfiles("test")
-class SettingsUserDetailsServiceIT {
+class PropertiesUserDetailsServiceIT {
 	@Autowired
-	lateinit var service: SettingsUserDetailsService
+	private lateinit var service: PropertiesUserDetailsService
 
 	@Test
 	fun loadUserByUsername() {

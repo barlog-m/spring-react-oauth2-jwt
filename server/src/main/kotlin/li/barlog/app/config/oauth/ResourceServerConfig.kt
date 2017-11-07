@@ -1,7 +1,7 @@
 package li.barlog.app.config.oauth
 
 import li.barlog.app.security.AuthenticationLoggerFilter
-import li.barlog.app.security.SettingsUserDetailsService
+import li.barlog.app.security.PropertiesUserDetailsService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -20,7 +20,7 @@ open class ResourceServerConfig : ResourceServerConfigurerAdapter() {
 	private lateinit var tokenServices: DefaultTokenServices
 
 	@Autowired
-	private lateinit var userDetailsService: SettingsUserDetailsService
+	private lateinit var userDetailsService: PropertiesUserDetailsService
 
 	override fun configure(http: HttpSecurity) {
 		// @formatter:offyarn

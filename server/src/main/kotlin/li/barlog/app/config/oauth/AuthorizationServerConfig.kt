@@ -1,7 +1,6 @@
 package li.barlog.app.config.oauth
 
 import li.barlog.app.security.CustomJwtTokenEnhancer
-import li.barlog.app.security.SettingsUserDetailsService
 import li.barlog.app.settings.AuthenticationSettings
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -26,9 +25,6 @@ open class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
 
 	@Autowired
 	private lateinit var authenticationSettings: AuthenticationSettings
-
-	@Autowired
-	private lateinit var userDetailsService: SettingsUserDetailsService
 
 	@Bean
 	open fun tokenStore(
@@ -105,6 +101,5 @@ open class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
 			.tokenStore(tokenStore(authenticationSettings))
 			.tokenEnhancer(tokenEnhancerChain)
 			.authenticationManager(authenticationManager)
-			.userDetailsService(userDetailsService)
 	}
 }

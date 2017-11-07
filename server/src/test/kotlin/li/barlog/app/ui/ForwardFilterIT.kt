@@ -23,7 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner
 @ActiveProfiles("test")
 class ForwardFilterIT {
 	@Autowired
-	lateinit var restTemplate: TestRestTemplate
+	private lateinit var restTemplate: TestRestTemplate
 
 	@Test
 	fun redirect() {

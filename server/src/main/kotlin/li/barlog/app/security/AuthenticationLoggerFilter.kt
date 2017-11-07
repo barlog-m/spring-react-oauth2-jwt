@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 class AuthenticationLoggerFilter(
-	private val userDetailsService: SettingsUserDetailsService
+	private val userDetailsService: PropertiesUserDetailsService
 ) : OncePerRequestFilter() {
 	override fun doFilterInternal(req: HttpServletRequest,
 								  res: HttpServletResponse,

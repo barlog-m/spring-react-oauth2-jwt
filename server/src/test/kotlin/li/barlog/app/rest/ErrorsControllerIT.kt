@@ -26,7 +26,7 @@ import org.springframework.web.client.ResourceAccessException
 @ActiveProfiles("test")
 class ErrorsControllerIT {
 	@Autowired
-	lateinit var restTemplate: TestRestTemplate
+	private lateinit var restTemplate: TestRestTemplate
 
 	@Value("\${api.prefix}")
 	private val apiPrefix = ""

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController
 )
 class CsrfTestController {
 	@PostMapping
-	fun post() = run {
+	fun post(): ResponseEntity<Map<String, String>> =
 		ResponseEntity.ok(mapOf("status" to "ok"))
-	}
 }

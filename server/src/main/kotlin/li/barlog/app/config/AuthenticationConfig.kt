@@ -1,6 +1,6 @@
 package li.barlog.app.config
 
-import li.barlog.app.security.SettingsUserDetailsService
+import li.barlog.app.security.PropertiesUserDetailsService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 @Configuration
 open class AuthenticationConfig : GlobalAuthenticationConfigurerAdapter() {
 	@Autowired
-	private lateinit var detailsService: SettingsUserDetailsService
+	private lateinit var detailsService: PropertiesUserDetailsService
 
 	@Bean
 	open fun passwordEncoder() = BCryptPasswordEncoder()

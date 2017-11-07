@@ -23,5 +23,4 @@ authentication:
 
 logging:
   level:
-    root: INFO
-    org.springframework.security.oauth2: DEBUG
+    root: TRACE

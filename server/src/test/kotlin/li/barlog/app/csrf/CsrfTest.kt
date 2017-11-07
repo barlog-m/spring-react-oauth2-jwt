@@ -26,9 +26,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 @ActiveProfiles("test")
 class CsrfTest {
 	@Autowired
-	lateinit var context: WebApplicationContext
+	private lateinit var context: WebApplicationContext
 
-	lateinit var mvc: MockMvc
+	private lateinit var mvc: MockMvc
 
 	@Before
 	fun setup() {
