@@ -121,7 +121,7 @@ docker {
 	files jar.outputs
 	dockerfile file('src/main/docker/Dockerfile')
 	buildArgs([
-		JAVA_OPTS: '-XX:-TieredCompilation -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap',
+		JAVA_OPTS: '-XX:-TieredCompilation -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1',
 		PORT     : '8081'
 	])
 	pull true
